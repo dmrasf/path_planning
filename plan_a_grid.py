@@ -182,7 +182,7 @@ if __name__ == "__main__":
     end = (4, 16)
     barrier = [0]
 
-    # n = get_map('./map.pgm')
+    # n = get_map('./maps/map.pgm')
     # start = (80, 10)
     # end = (80, 200)
     # barrier = [0, 205]
