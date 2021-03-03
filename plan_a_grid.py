@@ -5,6 +5,7 @@
 
 import numpy as np
 from utils import show_map, get_map
+import build_map
 
 
 def cal_distance(n, end):
@@ -169,26 +170,11 @@ def optimising_path(points, start, n, barrier):
 
 
 if __name__ == "__main__":
-    n = np.array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-                  [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, ],
-                  [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, ],
-                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ]])
-    n[n == 1] = 255
-    start = (3, 3)
-    end = (4, 16)
-    barrier = [0]
-
-    # n = get_map('./maps/map.pgm')
-    # start = (80, 10)
-    # end = (80, 200)
-    # barrier = [0, 205]
+    n, start, end = build_map.getMapFromData('./map_data.json')
+    barrier = [0, 150]
 
     points = route_plan_a(start, end, n, barrier)
-    points = optimising_path(points, start, n, barrier)
+    # points = optimising_path(points, start, n, barrier)
     for i in points:
         n[i[0]][i[1]] = 100
 
