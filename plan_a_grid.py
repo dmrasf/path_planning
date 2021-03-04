@@ -170,8 +170,7 @@ def optimising_path(points, start, n, barrier):
 
 
 if __name__ == "__main__":
-    n, start, end = build_map.getMapFromData('./map_data.json')
-    barrier = [0]
+    n, start, end, barrier = build_map.getMapFromData('./map_data.json')
 
     points = route_plan_a(start, end, n, barrier)
     # points = optimising_path(points, start, n, barrier)

@@ -4,12 +4,8 @@
 # Version: 0.2
 
 import numpy as np
-from utils import get_map, show_map
-
-
-def get_v_points(start, end, n):
-    # 这些可视点需要程序算出，这里先手写
-    return [start, (0, 1), (2, 1), (5, 1), (7, 1), (0, 9), (7, 9), (0, 14), (2, 14), (5, 11), (7, 11), (0, 19), (7, 19), end]
+import utils
+import build_map
 
 
 def update_open_set(open_point_set, close_point_set, current_point, v_g):
@@ -130,7 +126,7 @@ def optimising_path(points, v_g, v_points):
 
 
 # 有点问题，需要栅格大小和机器人底座大小数据
-def check_is_visible(p1, p2, n, barrier):
+def check_is_visible(p1, p2, n):
     """检查两个点是否连通
 
     Args:
@@ -141,28 +137,14 @@ def check_is_visible(p1, p2, n, barrier):
     Returns:
         是否可视
     """
-    if abs(p1[0]-p2[0]) > abs(p1[1]-p2[1]):
-        if p1[0] > p2[0]:
-            x = np.array(range(p2[0], p1[0]+1))
-        else:
-            x = np.array(range(p1[0], p2[0]+1))
-        y = (x-p1[0])/(p2[0]-p1[0])*(p2[1]-p1[1])+p1[1]
-        y = np.rint(y)
-    else:
-        if p1[1] > p2[1]:
-            y = np.array(range(p2[1], p1[1]+1))
-        else:
-            y = np.array(range(p1[1], p2[1]+1))
-        x = (y-p1[1])/(p2[1]-p1[1])*(p2[0]-p1[0])+p1[0]
-        x = np.rint(x)
-
-    for i in range(len(x)):
-        if n[int(x[i]), int(y[i])] in barrier:
-            return False
+    points = build_map.getPointsFromPoint1ToPoint2Line(p1, p2)
+    tmp = n[points[0], points[1]]
+    if np.min(tmp) == 0:
+        return False
     return True
 
 
-def solve_graph(v_points, n, barrier):
+def solve_graph(v_points, n):
     """根据可视点求解可视图，点与点之间是否可视，-1为不可视，其他值为距离
 
     Args:
@@ -178,7 +160,7 @@ def solve_graph(v_points, n, barrier):
         for j in range(i, len_point):
             if v_points[i] == v_points[j]:
                 v_g[i, j] = 0
-            elif check_is_visible(v_points[i], v_points[j], n, barrier):
+            elif check_is_visible(v_points[i], v_points[j], n):
                 v_g[i, j] = pow(pow(v_points[i][0]-v_points[j][0], 2) +
                                 pow(v_points[i][1]-v_points[j][1], 2), 0.5)
             else:
@@ -188,24 +170,10 @@ def solve_graph(v_points, n, barrier):
 
 
 if __name__ == "__main__":
-    # 从pgm文件得出
-    n = get_map('./maps/map.pgm')
-    n = np.array([[1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, ],
-                  [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, ],
-                  [2, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [3, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [4, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [5, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, ],
-                  [6, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, ],
-                  [7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ]])
-    n[n != 0] = 255
-    start = (4, 0)
-    end = (4, 16)
-    barrier = [0]
-    v_points = get_v_points(start, end, n)
-    v_g = solve_graph(v_points, n, barrier)
+    n, v_points = build_map.getVPointFromMap('./map_data.json')
+    v_g = solve_graph(v_points, n)
     points = route_plan_a(v_g, v_points)
-    print(points)
     for p in points:
-        n[p[0], p[1]] = 100
-    show_map(n)
+        print(build_map._gridToReal(p, 0.1))
+        n[p[0], p[1]] = 20
+    utils.show_map(n)
