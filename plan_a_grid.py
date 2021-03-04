@@ -75,8 +75,8 @@ def find_next_point(current_point, open_point_set, n_distance):
     min_distance = float('inf')
     for tmp_point in open_point_set:
         # 启发函数
-        tmp_distance = abs(tmp_point[0][0]-current_point[0][0]) + \
-            abs(tmp_point[0][1]-current_point[0][1]) + \
+        tmp_distance = 0.3 * (abs(tmp_point[0][0]-current_point[0][0]) +
+                              abs(tmp_point[0][1]-current_point[0][1])) + \
             n_distance[tmp_point[0][0]][tmp_point[0][1]]
         if tmp_distance < min_distance:
             min_distance = tmp_distance
@@ -171,7 +171,7 @@ def optimising_path(points, start, n, barrier):
 
 if __name__ == "__main__":
     n, start, end = build_map.getMapFromData('./map_data.json')
-    barrier = [0, 150]
+    barrier = [0]
 
     points = route_plan_a(start, end, n, barrier)
     # points = optimising_path(points, start, n, barrier)

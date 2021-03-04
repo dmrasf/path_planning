@@ -100,9 +100,10 @@ def _expansionMap(needExpansionGrid, myMap):
             if i + mask > x or j + mask > y:
                 continue
             if np.sum(tmpMap2[i:i+mask, j:j+mask]) > 0:
-                tmpMap[i:i+mask, j:j+mask] = 150
+                tmpMap[i:i+mask, j:j+mask] = 1
     tmpMap[tmpMap == 0] = 255
     tmpMap[tmpMap2 == 1] = 0
+    tmpMap[tmpMap == 1] = 0
     return tmpMap[1:myMap.shape[0]+1, 1:myMap.shape[1]+1]
 
 
@@ -137,3 +138,7 @@ def getMapFromData(path):
     p = _realToGrid(mapData['start'], mapData['end'],
                     mapData['grid'], myMap.shape)
     return myMap, (p[0], p[1]), (p[2], p[3])
+
+
+def getVPointFromMap(path):
+    pass
