@@ -223,6 +223,7 @@ def _getVPointFromContour(contour, myMap):
 
 
 def _gridToReal(point, grid):
+
     return (point[0]*grid+grid/2, point[1]*grid+grid/2)
 
 
@@ -233,6 +234,7 @@ def getVPointFromMap(path):
         print('地图数据错误')
         return None
     e = 120
+    grid = mapData['grid']
     myMap = _buildMap(mapData, 0)
     newMap = myMap.copy()
     myMap = _expansionMap(1, myMap, e)
@@ -243,6 +245,6 @@ def getVPointFromMap(path):
     for contour in contours:
         v_points.extend(_getVPointFromContour(contour, myMap))
     v_points.append((p[2], p[3]))
-    return newMap, v_points
+    return newMap, v_points, grid
 
 # getVPointFromMap('./map_data.json')

@@ -1,7 +1,7 @@
 {
     "width": 10,
     "heigth": 5,
-    "grid": 0.1,
+    "grid": 0.05,
     "robotSize": 0.3,
     "start": [
         0.5,
