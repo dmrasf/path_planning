@@ -34,6 +34,7 @@ def _realToGrid(point_1, point_2, grid, shape):
 
 
 def getPointsFromPoint1ToPoint2Line(point_1, point_2):
+    # 栅格坐标点
     point_1_x, point_1_y, point_2_x, point_2_y = point_1[0], point_1[1], point_2[0], point_2[1]
     if abs(point_1_x-point_2_x) > abs(point_1_y-point_2_y):
         if point_1_x > point_2_x:
@@ -54,16 +55,93 @@ def getPointsFromPoint1ToPoint2Line(point_1, point_2):
     return [x, y]
 
 
-def _drawLine(point_1, point_2, myMap, grid):
+def _azimuthAngle(x1,  y1,  x2,  y2):
+    angle = 0.0
+    dx = x2 - x1
+    dy = y2 - y1
+    if x2 == x1:
+        angle = math.pi / 2.0
+        if y2 == y1:
+            angle = 0.0
+        elif y2 < y1:
+            angle = 3.0 * math.pi / 2.0
+    elif x2 > x1 and y2 > y1:
+        angle = math.atan(dx / dy)
+    elif x2 > x1 and y2 < y1:
+        angle = math.pi / 2 + math.atan(-dy / dx)
+    elif x2 < x1 and y2 < y1:
+        angle = math.pi + math.atan(dx / dy)
+    elif x2 < x1 and y2 > y1:
+        angle = 3.0 * math.pi / 2.0 + math.atan(dy / -dx)
+    return (angle * 180 / math.pi)
+
+
+def _getPointsFromPoint1ToPoint2Curve(point_1, point_2, radius, grid, direction, curvature):
+    # 真实坐标点 半径  栅格大小  方向  曲率大小
+    x1 = point_1[0]
+    y1 = point_1[1]
+    x2 = point_2[0]
+    y2 = point_2[1]
+    m, n = (x1+x2)/2, (y1+y2)/2
+    k = -1/(y1-y2)*(x1-x2)
+    a = k*k+1
+    b = 2*k*(-k*m+n-y1)-2*x1
+    c = x1*x1+(-k*m+n-y1)*(-k*m+n-y1)-radius*radius
+    judge = b*b-4*a*c
+    if judge < 0:
+        return None
+    x_1 = (-b+math.sqrt(judge))/2/a
+    y_1 = k*(x_1-m)+n
+    x_2 = (-b-math.sqrt(judge))/2/a
+    y_2 = k*(x_2-m)+n
+    anglel = _azimuthAngle(x1, y1, x_1, y_1)
+    angle2 = _azimuthAngle(x_1, y_1, x2, y2)
+    if angle2 > anglel:
+        if direction == 'Counterclockwise':
+            o_x = x_1
+            o_y = y_1
+        else:
+            o_x = x_2
+            o_y = y_2
+    else:
+        if direction == 'Counterclockwise':
+            o_x = x_2
+            o_y = y_2
+        else:
+            o_x = x_1
+            o_y = y_1
+    if curvature == 'small':
+        if o_x == x_1 and o_y == y_1:
+            o_x = x_2
+            o_y = y_2
+        else:
+            o_x = x_1
+            o_y = y_1
+    print(o_x, o_y)
+    return []
+
+
+_getPointsFromPoint1ToPoint2Curve(
+    [1, 1], [4, 4], 3, 0.05, 'Counterclockwise', 'big')
+
+
+def _drawLine(point_1_data, point_2_data, myMap, grid):
     # 给定两个实际坐标点在栅格地图上绘制线条，目前只能绘制直线
+    point_1, point_2 = [point_1_data['pointX'], point_1_data['pointY']], [
+        point_2_data['pointX'], point_2_data['pointY']]
     point_1_x, point_1_y, point_2_x, point_2_y = _realToGrid(
-        [point_1['pointX'], point_1['pointY']], [point_2['pointX'], point_2['pointY']], grid, myMap.shape)
-    if point_1['lineType'] == 'straight':
+        point_1, point_2, grid, myMap.shape)
+    if point_1_data['lineType'] == 'straight':
         points = getPointsFromPoint1ToPoint2Line(
             [point_1_x, point_1_y], [point_2_x, point_2_y])
         myMap[points[0], points[1]] = 0
-    elif point_1['lineType'] == 'curve':
-        pass
+    elif point_1_data['lineType'] == 'curve':
+        radius = point_1_data['radius']
+        direction = point_1_data['direction']
+        curvature = point_1_data['curvature']
+        points = _getPointsFromPoint1ToPoint2Curve(
+            point_1, point_2, radius, grid, direction, curvature)
+        myMap[points[0], points[1]] = 0
 
 
 def _drawBarrier(myMap, barrier, grid):
