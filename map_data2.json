@@ -1,0 +1,38 @@
+{
+  "heigth": 0.9,
+  "width": 1.8,
+  "grid": 0.01,
+  "robotSize": 0.3,
+  "start": [
+    0,
+    0
+  ],
+  "end": [
+    0.6,
+    1.5
+  ],
+  "barriers": [
+    [
+      {
+        "pointX": 0.3,
+        "pointY": 0.3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 0.3,
+        "pointY": 0.6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 0.6,
+        "pointY": 0.6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 0.6,
+        "pointY": 0.3,
+        "lineType": "straight"
+      }
+    ]
+  ]
+}

@@ -16,6 +16,10 @@ def _getMapData(path):
     return contents
 
 
+def _gridToReal(point, grid):
+    return (point[0]*grid+grid/2, point[1]*grid+grid/2)
+
+
 def _realToGrid(point_1, point_2, grid, shape):
     # 实际点变为栅格点
     point_1_x = int(point_1[0]/grid)
@@ -119,10 +123,8 @@ def _getPointsFromPoint1ToPoint2Curve(point_1, point_2, radius, grid, direction,
             o_y = y_1
     print(o_x, o_y)
     return []
-
-
-_getPointsFromPoint1ToPoint2Curve(
-    [1, 1], [4, 4], 3, 0.05, 'Counterclockwise', 'big')
+    # _getPointsFromPoint1ToPoint2Curve(
+    # [1, 1], [4, 4], 3, 0.05, 'Counterclockwise', 'big')
 
 
 def _drawLine(point_1_data, point_2_data, myMap, grid):
@@ -172,7 +174,7 @@ def _fillHole(x, y, myMap):
 
 
 def _expansionMap(needExpansionGrid, myMap, e):
-    # 障碍向外扩展任意层数，需要0-255二值图
+    # 障碍向外扩展任意层数，需要二值图
     mask = needExpansionGrid + 1
     tmpMap = myMap.copy()
     [x, y] = tmpMap.shape
@@ -222,10 +224,6 @@ def getMapFromData(path):
                     mapData['grid'], myMap.shape)
     return myMap, (p[0], p[1]), (p[2], p[3]), (0, e)
 
-
-##########################################################################
-##########################################################################
-##########################################################################
 
 def _getNextContorPoint(openSet, currentPoint):
     # 获取连接的任意一个点
@@ -300,11 +298,6 @@ def _getVPointFromContour(contour, myMap):
     return points
 
 
-def _gridToReal(point, grid):
-
-    return (point[0]*grid+grid/2, point[1]*grid+grid/2)
-
-
 def getVPointFromMap(path):
     # 得到可视点
     mapData = _getMapData(path)
@@ -323,6 +316,4 @@ def getVPointFromMap(path):
     for contour in contours:
         v_points.extend(_getVPointFromContour(contour, myMap))
     v_points.append((p[2], p[3]))
-    return newMap, v_points, grid
-
-# getVPointFromMap('./map_data.json')
+    return newMap, v_points, grid, mapData['start'], mapData['end']

@@ -6,19 +6,6 @@ import math
 from enum import Enum
 
 
-def show_map(n):
-    """显示地图
-
-    Args:
-        n: 地图
-    """
-    plt.imshow(n)
-    plt.xticks([])
-    plt.yticks([])
-    plt.set_cmap('gray')
-    plt.show()
-
-
 ContourOrder = Enum('ContourOrder', ('Counterclockwise', 'Clockwise'))
 
 
@@ -39,6 +26,8 @@ class Map:
             self.__width = contents['width']
             self.__heigth = contents['heigth']
             self.__grid = contents['grid']
+            self.__start_point = contents['start']
+            self.__end_point = contents['end']
             self.__robot_size = contents['robotSize']
             self.__barriers = contents['barriers']
             self.__w_grid = math.ceil(self.__width/self.__grid)
@@ -57,6 +46,15 @@ class Map:
         except Exception as _:
             print("地图格式错误")
             exit(0)
+
+    def get_map(self):
+        return self.__my_map
+
+    def get_start_point(self):
+        return (self.__start_point[0], self.__start_point[1])
+
+    def get_end_point(self):
+        return (self.__end_point[0], self.__end_point[1])
 
     def real_to_grid(self, point):
         """实际坐标 -> 栅格坐标"""
@@ -243,7 +241,3 @@ class Map:
         plt.yticks([])
         plt.set_cmap('gray')
         plt.show()
-
-
-m = Map('./map_data.json')
-m.show_map_expand()

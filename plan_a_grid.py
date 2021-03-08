@@ -4,7 +4,7 @@
 # Version: 0.2
 
 import numpy as np
-from utils import show_map, get_map
+import utils
 import build_map
 
 
@@ -173,8 +173,8 @@ if __name__ == "__main__":
     n, start, end, barrier = build_map.getMapFromData('./map_data.json')
 
     points = route_plan_a(start, end, n, barrier)
-    # points = optimising_path(points, start, n, barrier)
+    points = optimising_path(points, start, n, barrier)
     for i in points:
         n[i[0]][i[1]] = 100
 
-    show_map(n)
+    utils.show_map(n)

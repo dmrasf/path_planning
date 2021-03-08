@@ -1,100 +1,100 @@
 {
-    "width": 10,
-    "heigth": 5,
-    "grid": 0.05,
-    "robotSize": 0.3,
-    "start": [
-        0.5,
-        0.5
+  "width": 10,
+  "heigth": 5,
+  "grid": 0.05,
+  "robotSize": 0.3,
+  "start": [
+    0.5,
+    0.5
+  ],
+  "end": [
+    3,
+    9
+  ],
+  "barriers": [
+    [
+      {
+        "pointX": 1,
+        "pointY": 1,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3,
+        "pointY": 2.7,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3.3,
+        "pointY": 4,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3.5,
+        "pointY": 4,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3.5,
+        "pointY": 2.3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1.2,
+        "pointY": 2.3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1.2,
+        "pointY": 1,
+        "lineType": "straight"
+      }
     ],
-    "end": [
-        3,
-        9
-    ],
-    "barriers": [
-        [
-            {
-                "pointX": 1,
-                "pointY": 1,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 1,
-                "pointY": 2.5,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 3,
-                "pointY": 2.7,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 3.3,
-                "pointY": 4,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 3.5,
-                "pointY": 4,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 3.5,
-                "pointY": 2.3,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 1.2,
-                "pointY": 2.3,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 1.2,
-                "pointY": 1,
-                "lineType": "straight"
-            }
-        ],
-        [
-            {
-                "pointX": 1,
-                "pointY": 5,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 1,
-                "pointY": 8,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 4,
-                "pointY": 8,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 4,
-                "pointY": 5,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 3.8,
-                "pointY": 5,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 3.8,
-                "pointY": 7.8,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 1.2,
-                "pointY": 7.8,
-                "lineType": "straight"
-            },
-            {
-                "pointX": 1.2,
-                "pointY": 5,
-                "lineType": "straight"
-            }
-        ]
+    [
+      {
+        "pointX": 1,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3.8,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3.8,
+        "pointY": 7.8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1.2,
+        "pointY": 7.8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1.2,
+        "pointY": 5,
+        "lineType": "straight"
+      }
     ]
+  ]
 }

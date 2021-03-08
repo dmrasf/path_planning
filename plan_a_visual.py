@@ -6,6 +6,7 @@
 import numpy as np
 import utils
 import build_map
+import json
 
 
 def update_open_set(open_point_set, close_point_set, current_point, v_g):
@@ -170,12 +171,20 @@ def solve_graph(v_points, n):
 
 
 if __name__ == "__main__":
-    n, v_points, grid = build_map.getVPointFromMap('./map_data.json')
+    n, v_points, grid, start, end = build_map.getVPointFromMap(
+        './map_data.json')
     v_g = solve_graph(v_points, n)
     points = route_plan_a(v_g, v_points)
     real_points = []
     for p in points:
         real_points.insert(0, build_map._gridToReal(p, grid))
         n[p[0], p[1]] = 20
-    print(real_points)
+    real_points.pop()
+    real_points.remove(real_points[0])
+    real_points.insert(0, start)
+    real_points.append(end)
+    m = json.dumps(real_points)
+    f = open('points.json', 'w')
+    f.write(m)
+    f.close()
     utils.show_map(n)
