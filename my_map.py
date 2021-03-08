@@ -1,4 +1,3 @@
-from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
 import json
@@ -227,7 +226,9 @@ class Map:
 
     def show_map(self):
         """显示地图"""
-        plt.imshow(self.__my_map)
+        tmp_map = self.__my_map.copy()
+        tmp_map[self.__expanded[0], self.__expanded[1]] = 255
+        plt.imshow(tmp_map)
         plt.xticks([])
         plt.yticks([])
         plt.set_cmap('gray')

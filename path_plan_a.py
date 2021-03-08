@@ -6,10 +6,10 @@ import json
 class PathPlanningA():
     """A*算法"""
 
-    def __init__(self, path):
-        self.__map = Map(path)
+    def __init__(self, my_map: Map):
+        self.__map = my_map
 
-    def __calculated_graph(self):
+    def __calculate_graph(self):
         """计算可视点间距离"""
         start_point = self.__map.real_to_grid(self.__map.get_start_point())
         end_point = self.__map.real_to_grid(self.__map.get_end_point())
@@ -77,7 +77,7 @@ class PathPlanningA():
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
 
-    def save_route_path(self):
+    def save_route_path(self, save_path):
         try:
             real_points = [self.__map.get_start_point()]
             for i in range(1, len(self.__path_route)-1):
@@ -85,7 +85,7 @@ class PathPlanningA():
                     self.__map.grid_to_real(self.__path_route[i]))
             real_points.append(self.__map.get_end_point())
             tmp_json = json.dumps(real_points)
-            f = open('points.json', 'w')
+            f = open(save_path, 'w')
             f.write(tmp_json)
             f.close()
         except:
@@ -94,7 +94,7 @@ class PathPlanningA():
 
     def start_planing(self):
         """开始规划"""
-        self.__calculated_graph()
+        self.__calculate_graph()
         self.__close_point_set = set()
         self.__open_point_set = set()
         start = 0
@@ -114,8 +114,3 @@ class PathPlanningA():
         self.__close_point_set.remove((start, start))
         self.__parse_path_from_close_set()
         return self.__path_route
-
-
-p = PathPlanningA('./map_data.json')
-p.start_planing()
-p.save_route_path()
