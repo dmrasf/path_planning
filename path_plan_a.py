@@ -20,7 +20,7 @@ class PathPlanningA():
         len_visual_points = len(visual_points)
         self.__visual_graph = np.zeros((len_visual_points, len_visual_points))
         for i in range(len_visual_points):
-            for j in range(len_visual_points):
+            for j in range(i, len_visual_points):
                 if visual_points[i] == visual_points[j]:
                     self.__visual_graph[i, j] = 0
                 elif self.__map.is_visible(visual_points[i], visual_points[j]):
@@ -74,6 +74,7 @@ class PathPlanningA():
                 break
         path_route.reverse()
         self.__path_route = []
+        print('A*算法计算出的路径点：', path_route)
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
 

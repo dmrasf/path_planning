@@ -4,6 +4,12 @@ from my_map import Map
 
 if __name__ == "__main__":
     my_map = Map('./map_data_1.json')
-    p = PathPlanningA(my_map)
-    print(p.start_planing())
-    p.save_route_path('./points2.json')
+
+    p_ant = PathPlanningAnt(my_map)
+    p_ant.start_planing()
+
+    p_a = PathPlanningA(my_map)
+    path_a = p_a.start_planing()
+    print(my_map.get_visual_points())
+
+    # my_map.show_map()

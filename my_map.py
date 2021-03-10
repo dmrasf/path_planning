@@ -47,7 +47,7 @@ class Map:
             exit(0)
 
     def get_map(self):
-        return self.__my_map
+        return self.__my_map.copy()
 
     def get_start_point(self):
         return (self.__start_point[0], self.__start_point[1])
@@ -215,7 +215,7 @@ class Map:
                                               contour[(i-1) % len(contour)][1]))
             self.__visual_points = visual_points
         finally:
-            return self.__visual_points
+            return self.__visual_points.copy()
 
     def is_visible(self, point_1, point_2):
         """判断在膨胀过地图上，检查两个点是否可视"""

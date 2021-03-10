@@ -13,9 +13,9 @@ class PathPlanningAnt(object):
         # 信息素权重
         self.__a = 0.5
         # 路径长度权重
-        self.__b = 1
+        self.__b = 0.5
         # 信息素挥发速度
-        self.__p = 1
+        self.__p = 0.4
         # 每只蚂蚁所含有的信息素
         self.__pheromone = 10
         # 路径信息素初始值
@@ -36,7 +36,7 @@ class PathPlanningAnt(object):
         self.__end = len_visual_points-1
         self.__visual_graph = np.zeros((len_visual_points, len_visual_points))
         for i in range(len_visual_points):
-            for j in range(len_visual_points):
+            for j in range(i, len_visual_points):
                 if visual_points[i] == visual_points[j]:
                     self.__visual_graph[i, j] = 0
                 elif self.__map.is_visible(visual_points[i], visual_points[j]):
@@ -80,6 +80,21 @@ class PathPlanningAnt(object):
             self.__current_iteration_ants.append(
                 [random.randint(0, len(self.__visual_points)-2)])
 
+    def __update_path_phermonone(self):
+        """更新路径信息素"""
+        self.__path_phermonone = self.__path_phermonone*(1-self.__p)
+        for ant in self.__current_iteration_ants:
+            if ant[-1] != -1:
+                path = 0
+                for i in range(len(ant)-1):
+                    path = path + self.__visual_graph[i, i+1]
+                delta_phermonone = self.__pheromone/path
+                for i in range(len(ant)-1):
+                    self.__path_phermonone[i, i + 1] = \
+                        self.__path_phermonone[i, i+1] + delta_phermonone
+                    self.__path_phermonone[i+1, i] = \
+                        self.__path_phermonone[i, i+1]
+
     def __calculate_probability(self, point_1, point_2):
         """计算可行坐标的信息素与路径长度值"""
         if self.__visual_graph[point_1, point_2] == 0 or self.__visual_graph[point_1, point_2] == -1:
@@ -102,11 +117,25 @@ class PathPlanningAnt(object):
                     self.__calculate_probability(ant[-1], point_to_selected[i])
             probabilities = probabilities/np.sum(probabilities)
             try:
+                # 遇到死路设为-1，不会增加信息素
                 ant.append(np.random.choice(
                     point_to_selected, 1, p=probabilities)[0])
             except:
                 ant.append(-1)
         return is_all_done
+
+    def __get_final_path(self):
+        """根据信息素多少求得路径"""
+        path_route = [0]
+        for i in range(len(self.__path_phermonone)):
+            sort_point = np.argsort(self.__path_phermonone[i, :])
+            for point in sort_point[::-1]:
+                if point not in path_route:
+                    path_route.append(point)
+                    break
+            if path_route[-1] == self.__end:
+                break
+        print('蚁群算法规划：', path_route)
 
     def start_planing(self):
         """开始规划"""
@@ -118,9 +147,11 @@ class PathPlanningAnt(object):
                 is_all_arrive_end = self.__select_next_pos_for_ants()
                 if is_all_arrive_end:
                     break
-            print(self.__current_iteration_ants)
-            break
+            self.__update_path_phermonone()
+            # print(self.__current_iteration_ants)
+        # print(self.__path_phermonone)
+        self.__get_final_path()
 
 
-p = PathPlanningAnt(Map('./map_data_2.json'))
-p.start_planing()
+# p = PathPlanningAnt(Map('./map_data_1.json'))
+# p.start_planing()
