@@ -260,7 +260,7 @@ class Map:
         path = 0
         for i in range(len(path_route)-1):
             path = path + self.__visual_graph[path_route[i], path_route[i+1]]
-        return path_route
+        return path
 
     def __show_points_to_map(self, points=None):
         """绘制可视点"""

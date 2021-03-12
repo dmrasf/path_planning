@@ -58,8 +58,7 @@ class PathPlanningAnt(object):
         """设置每一代蚂蚁位置，除终点外"""
         self.__current_iteration_ants = []
         for _ in range(self.__ants_num):
-            self.__current_iteration_ants.append(
-                [random.randint(0, len(self.__visual_points)-2)])
+            self.__current_iteration_ants.append([0])
 
     def __update_path_phermonone(self):
         """更新路径信息素"""
