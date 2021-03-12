@@ -221,12 +221,46 @@ class Map:
             self.__visual_points = visual_points
         return self.__visual_points
 
+    def get_visual_graph(self):
+        """计算可视点间距离"""
+        try:
+            self.__visual_graph
+        except:
+            self.get_visual_points()
+        len_visual_points = len(self.__visual_points)
+        self.__start = 0
+        self.__end = len_visual_points-1
+        self.__visual_graph = np.zeros(
+            (len_visual_points, len_visual_points))
+        for i in range(len_visual_points):
+            for j in range(i, len_visual_points):
+                if self.__visual_points[i] == self.__visual_points[j]:
+                    self.__visual_graph[i, j] = 0
+                elif self.is_visible(self.__visual_points[i], self.__visual_points[j]):
+                    self.__visual_graph[i, j] = pow(pow(self.__visual_points[i][0]-self.__visual_points[j][0], 2) +
+                                                    pow(self.__visual_points[i][1]-self.__visual_points[j][1], 2), 0.5)
+                else:
+                    self.__visual_graph[i, j] = -1
+                self.__visual_graph[j, i] = self.__visual_graph[i, j]
+        return self.__visual_graph
+
     def is_visible(self, point_1, point_2):
         """判断在膨胀过地图上，检查两个点是否可视"""
         points = self.get_points_from_two_point_line(point_1, point_2)
         if np.min(self.__my_map[points[0], points[1]]) == 0:
             return False
         return True
+
+    def calculate_path_distance(self, path_route):
+        """计算规划路径长度"""
+        try:
+            self.__visual_graph
+        except:
+            self.get_visual_graph()
+        path = 0
+        for i in range(len(path_route)-1):
+            path = path + self.__visual_graph[path_route[i], path_route[i+1]]
+        return path_route
 
     def __show_points_to_map(self, points=None):
         """绘制可视点"""

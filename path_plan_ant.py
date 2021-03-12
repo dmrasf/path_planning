@@ -23,26 +23,9 @@ class PathPlanningAnt(object):
         self.__init_paht_phermonone_value = 2
         # 迭代次数，蚂蚁代数
         self.__iteration_num = 10
-        self.__calculate_graph()
-
-    def __calculate_graph(self):
-        """计算可视点间距离"""
-        visual_points = self.__map.get_visual_points()
-        self.__visual_points = visual_points
-        len_visual_points = len(visual_points)
-        self.__start = 0
-        self.__end = len_visual_points-1
-        self.__visual_graph = np.zeros((len_visual_points, len_visual_points))
-        for i in range(len_visual_points):
-            for j in range(i, len_visual_points):
-                if visual_points[i] == visual_points[j]:
-                    self.__visual_graph[i, j] = 0
-                elif self.__map.is_visible(visual_points[i], visual_points[j]):
-                    self.__visual_graph[i, j] = pow(pow(visual_points[i][0]-visual_points[j][0], 2) +
-                                                    pow(visual_points[i][1]-visual_points[j][1], 2), 0.5)
-                else:
-                    self.__visual_graph[i, j] = -1
-                self.__visual_graph[j, i] = self.__visual_graph[i, j]
+        self.__visual_graph = self.__map.get_visual_graph()
+        self.__visual_points = self.__map.get_visual_points()
+        self.__end = len(self.__visual_points)-1
 
     def set_params(self, ants_num=None, a=None, b=None, p=None, ant_phermomone=None, init_path_phermomone_value=None, iteration_num=None):
         """设置算法参数 默认参数"""
@@ -137,9 +120,7 @@ class PathPlanningAnt(object):
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
         print('蚁群算法规划：', path_route)
-        path = 0
-        for i in range(len(path_route)-1):
-            path = path + self.__visual_graph[path_route[i], path_route[i+1]]
+        path = self.__map.calculate_path_distance(path_route)
         print('路径总长度', path)
         return path_route
 
