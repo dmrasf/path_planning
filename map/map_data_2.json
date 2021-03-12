@@ -1,0 +1,389 @@
+{
+  "width": 21,
+  "heigth": 17.5,
+  "grid": 0.05,
+  "robotSize": 0.3,
+  "name": "几个方格房间",
+  "start": [
+    0.5,
+    0.5
+  ],
+  "end": [
+    12,
+    16
+  ],
+  "barriers": [
+    [
+      {
+        "pointX": 2,
+        "pointY": 2,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 2,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 6,
+        "pointY": 2,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 6,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 4,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 4,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15.5,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15.5,
+        "pointY": 2,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 2,
+        "pointY": 6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2,
+        "pointY": 16,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 16,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 13.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 13.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 13,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 13,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 10.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 10.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 10.5,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 10.5,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 6,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 15,
+        "pointY": 6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 11.5,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 11.5,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 8,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 10.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15.5,
+        "pointY": 10.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15.5,
+        "pointY": 6,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 15,
+        "pointY": 11.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 13,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 13,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 11.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 11.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 13,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 6,
+        "pointY": 13,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 6,
+        "pointY": 13.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 13.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 15,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 15,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 13.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 13.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15,
+        "pointY": 18.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 12.5,
+        "pointY": 18.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 12.5,
+        "pointY": 19,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15.5,
+        "pointY": 19,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 15.5,
+        "pointY": 11.5,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 2,
+        "pointY": 17,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2,
+        "pointY": 19,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 11.5,
+        "pointY": 19,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 11.5,
+        "pointY": 18.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 18.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 16,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 16,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 18.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 18.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 17,
+        "lineType": "straight"
+      }
+    ]
+  ]
+}

@@ -74,6 +74,10 @@ class PathPlanningA():
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
         print('A*算法计算出的路径点：', path_route)
+        path = 0
+        for i in range(len(path_route)-1):
+            path = path + self.__visual_graph[path_route[i], path_route[i+1]]
+        print('路径总长度', path)
         return path_route
 
     def save_route_path(self, save_path='point_a.json'):
@@ -111,3 +115,6 @@ class PathPlanningA():
                 break
         self.__close_point_set.remove((start, start))
         return self.__parse_path_from_close_set()
+
+    def show_animation(self):
+        self.__is_show = True

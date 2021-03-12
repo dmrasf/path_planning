@@ -3,6 +3,7 @@
   "heigth": 5,
   "grid": 0.05,
   "robotSize": 0.3,
+  "name": "simple barriers",
   "start": [
     0.5,
     0.5

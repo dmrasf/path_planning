@@ -242,7 +242,7 @@ class Map:
         img = Image.fromarray(zoom_map)
         draw = ImageDraw.Draw(img)
         visual_points = self.get_visual_points()
-        font = ImageFont.truetype('./consola.ttf', size=50)
+        font = ImageFont.truetype('./consola.ttf', size=20)
         for i in range(len(visual_points)):
             draw.ellipse([(visual_points[i][1]-self.__needExpansionGrid)*k,
                           (visual_points[i][0]-self.__needExpansionGrid)*k,
