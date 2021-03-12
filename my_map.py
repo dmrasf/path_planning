@@ -249,6 +249,21 @@ class Map:
             return False
         return True
 
+    def save_route_path(self, save_path, points):
+        try:
+            real_points = [self.get_start_point()]
+            for i in range(1, len(points)-1):
+                real_points.append(
+                    self.grid_to_real(points[i]))
+            real_points.append(self.get_end_point())
+            tmp_json = json.dumps(real_points)
+            f = open(save_path, 'w')
+            f.write(tmp_json)
+            f.close()
+        except:
+            print('请运行规划函数')
+            exit(1)
+
     def calculate_path_distance(self, points):
         """计算规划路径长度"""
         try:

@@ -124,19 +124,8 @@ class PathPlanningAnt(object):
         return self.__path_route
 
     def save_route_path(self, save_path='points_ant.json'):
-        try:
-            real_points = [self.__map.get_start_point()]
-            for i in range(1, len(self.__path_route)-1):
-                real_points.append(
-                    self.__map.grid_to_real(self.__path_route[i]))
-            real_points.append(self.__map.get_end_point())
-            tmp_json = json.dumps(real_points)
-            f = open(save_path, 'w')
-            f.write(tmp_json)
-            f.close()
-        except:
-            print('请运行规划函数')
-            exit(1)
+        self.__map.save_route_path(save_path, self.__path_route)
+        print('路径保存成功')
 
     def start_planing(self):
         """开始规划"""
