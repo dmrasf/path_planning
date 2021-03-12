@@ -201,21 +201,25 @@ class Map:
 
     def get_visual_points(self):
         """得到障碍物可视点"""
-        contours = self.__get_contours_points(ContourOrder.Clockwise)
-        visual_points = []
-        for contour in contours:
-            point_1 = 0
-            for i in range(1, len(contour)+2):
-                i = i % len(contour)
-                if not self.is_visible(contour[point_1], contour[i]):
-                    point_1 = (i-1) % len(contour)
-                    visual_points.append((contour[(i-1) % len(contour)][0],
-                                          contour[(i-1) % len(contour)][1]))
-        start_point = self.real_to_grid(self.get_start_point())
-        end_point = self.real_to_grid(self.get_end_point())
-        visual_points.append(end_point)
-        visual_points.insert(0, start_point)
-        return visual_points.copy()
+        try:
+            self.__visual_points
+        except:
+            contours = self.__get_contours_points(ContourOrder.Clockwise)
+            visual_points = []
+            for contour in contours:
+                point_1 = 0
+                for i in range(1, len(contour)+2):
+                    i = i % len(contour)
+                    if not self.is_visible(contour[point_1], contour[i]):
+                        point_1 = (i-1) % len(contour)
+                        visual_points.append((contour[(i-1) % len(contour)][0],
+                                              contour[(i-1) % len(contour)][1]))
+            start_point = self.real_to_grid(self.get_start_point())
+            end_point = self.real_to_grid(self.get_end_point())
+            visual_points.append(end_point)
+            visual_points.insert(0, start_point)
+            self.__visual_points = visual_points
+        return self.__visual_points
 
     def is_visible(self, point_1, point_2):
         """判断在膨胀过地图上，检查两个点是否可视"""

@@ -12,7 +12,7 @@ class PathPlanningAnt(object):
         self.__map = my_map
         self.__ants_num = 10
         # 信息素权重
-        self.__a = 0.5
+        self.__a = 1
         # 路径长度权重
         self.__b = 0.5
         # 信息素挥发速度
@@ -169,11 +169,3 @@ class PathPlanningAnt(object):
                     break
             self.__update_path_phermonone()
         return self.__get_final_path()
-
-
-my_map = Map('./map/map_data_1.json')
-p_ant = PathPlanningAnt(my_map)
-p_ant.set_params(ants_num=30, a=1, b=1, p=0.8, ant_phermomone=100,
-                 init_path_phermomone_value=2, iteration_num=100)
-r_ant = p_ant.start_planing()
-my_map.show_map('Ants', points=r_ant)
