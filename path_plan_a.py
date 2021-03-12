@@ -30,14 +30,31 @@ class PathPlanningA():
                 else:
                     self.__open_point_set.add((i, current_point[0]))
 
+    def __get_visual_graph(self):
+        """计算可视点间距离"""
+        len_visual_points = len(self.__visual_points)
+        self.__visual_graph = np.zeros(
+            (len_visual_points, len_visual_points))
+        for i in range(len_visual_points):
+            for j in range(i, len_visual_points):
+                if self.__visual_points[i] == self.__visual_points[j]:
+                    self.__visual_graph[i, j] = 0
+                elif self.__map.is_visible(self.__visual_points[i], self.__visual_points[j]):
+                    self.__visual_graph[i, j] = pow(pow(self.__visual_points[i][0]-self.__visual_points[j][0], 2) +
+                                                    pow(self.__visual_points[i][1]-self.__visual_points[j][1], 2), 0.5)
+                else:
+                    self.__visual_graph[i, j] = -1
+                self.__visual_graph[j, i] = self.__visual_graph[i, j]
+
     def __find_next_point(self, current_point):
         """找到下一个移动坐标"""
         min_distance = float('inf')
         best_point = []
         for tmp_point in self.__open_point_set:
-            tmp_distance = self.__visual_graph[current_point[0], tmp_point[0]] + \
+            # 启发函数
+            tmp_distance = self.__visual_graph[len(self.__visual_points)-1, tmp_point[0]] + \
                 pow(pow(self.__visual_points[current_point[0]][0]-self.__visual_points[tmp_point[0]][0], 2) +
-                    pow(self.__visual_points[current_point[0]][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5)
+                    pow(self.__visual_points[current_point[0]][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5) * 0.8
             if tmp_distance < min_distance:
                 min_distance = tmp_distance
                 best_point = tmp_point
@@ -77,6 +94,16 @@ class PathPlanningA():
         except:
             print('请运行规划函数')
             exit(1)
+
+    def optimising_path_by_replan(self):
+        """优化路径"""
+        tmp_point = self.__path_route[-2]
+        self.__visual_points.pop()
+        self.__visual_points.remove(tmp_point)
+        self.__visual_points.append(tmp_point)
+        self.__get_visual_graph()
+        self.start_planing()
+        return self.__path_route
 
     def start_planing(self):
         """开始规划"""

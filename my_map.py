@@ -228,8 +228,6 @@ class Map:
         except:
             self.get_visual_points()
             len_visual_points = len(self.__visual_points)
-            self.__start = 0
-            self.__end = len_visual_points-1
             self.__visual_graph = np.zeros(
                 (len_visual_points, len_visual_points))
             for i in range(len_visual_points):
