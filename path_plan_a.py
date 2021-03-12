@@ -33,6 +33,7 @@ class PathPlanningA():
     def __find_next_point(self, current_point):
         """找到下一个移动坐标"""
         min_distance = float('inf')
+        best_point = []
         for tmp_point in self.__open_point_set:
             tmp_distance = self.__visual_graph[current_point[0], tmp_point[0]] + \
                 pow(pow(self.__visual_points[current_point[0]][0]-self.__visual_points[tmp_point[0]][0], 2) +
@@ -57,10 +58,10 @@ class PathPlanningA():
         self.__path_route = []
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
-        print('A*算法计算出的路径点：', path_route)
-        path = self.__map.calculate_path_distance(path_route)
+        path = self.__map.calculate_path_distance(self.__path_route)
+        print('A*算法计算出的路径点：', self.__path_route)
         print('路径总长度', path)
-        return path_route
+        return self.__path_route
 
     def save_route_path(self, save_path='point_a.json'):
         try:
@@ -97,6 +98,3 @@ class PathPlanningA():
                 break
         self.__close_point_set.remove((start, start))
         return self.__parse_path_from_close_set()
-
-    def show_animation(self):
-        self.__is_show = True

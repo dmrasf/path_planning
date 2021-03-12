@@ -219,7 +219,7 @@ class Map:
             visual_points.append(end_point)
             visual_points.insert(0, start_point)
             self.__visual_points = visual_points
-        return self.__visual_points
+        return self.__visual_points.copy()
 
     def get_visual_graph(self):
         """计算可视点间距离"""
@@ -227,21 +227,21 @@ class Map:
             self.__visual_graph
         except:
             self.get_visual_points()
-        len_visual_points = len(self.__visual_points)
-        self.__start = 0
-        self.__end = len_visual_points-1
-        self.__visual_graph = np.zeros(
-            (len_visual_points, len_visual_points))
-        for i in range(len_visual_points):
-            for j in range(i, len_visual_points):
-                if self.__visual_points[i] == self.__visual_points[j]:
-                    self.__visual_graph[i, j] = 0
-                elif self.is_visible(self.__visual_points[i], self.__visual_points[j]):
-                    self.__visual_graph[i, j] = pow(pow(self.__visual_points[i][0]-self.__visual_points[j][0], 2) +
-                                                    pow(self.__visual_points[i][1]-self.__visual_points[j][1], 2), 0.5)
-                else:
-                    self.__visual_graph[i, j] = -1
-                self.__visual_graph[j, i] = self.__visual_graph[i, j]
+            len_visual_points = len(self.__visual_points)
+            self.__start = 0
+            self.__end = len_visual_points-1
+            self.__visual_graph = np.zeros(
+                (len_visual_points, len_visual_points))
+            for i in range(len_visual_points):
+                for j in range(i, len_visual_points):
+                    if self.__visual_points[i] == self.__visual_points[j]:
+                        self.__visual_graph[i, j] = 0
+                    elif self.is_visible(self.__visual_points[i], self.__visual_points[j]):
+                        self.__visual_graph[i, j] = pow(pow(self.__visual_points[i][0]-self.__visual_points[j][0], 2) +
+                                                        pow(self.__visual_points[i][1]-self.__visual_points[j][1], 2), 0.5)
+                    else:
+                        self.__visual_graph[i, j] = -1
+                    self.__visual_graph[j, i] = self.__visual_graph[i, j]
         return self.__visual_graph
 
     def is_visible(self, point_1, point_2):
@@ -251,15 +251,16 @@ class Map:
             return False
         return True
 
-    def calculate_path_distance(self, path_route):
+    def calculate_path_distance(self, points):
         """计算规划路径长度"""
         try:
             self.__visual_graph
         except:
             self.get_visual_graph()
         path = 0
-        for i in range(len(path_route)-1):
-            path = path + self.__visual_graph[path_route[i], path_route[i+1]]
+        for i in range(len(points)-1):
+            path = path + self.__visual_graph[self.__visual_points.index(points[i]),
+                                              self.__visual_points.index(points[i+1])]
         return path
 
     def __show_points_to_map(self, points=None):
@@ -276,19 +277,20 @@ class Map:
         img = Image.fromarray(zoom_map)
         draw = ImageDraw.Draw(img)
         visual_points = self.get_visual_points()
-        font = ImageFont.truetype('./consola.ttf', size=20)
         for i in range(len(visual_points)):
             draw.ellipse([(visual_points[i][1]-self.__needExpansionGrid)*k,
                           (visual_points[i][0]-self.__needExpansionGrid)*k,
                           (visual_points[i][1]+self.__needExpansionGrid-1)*k,
                           (visual_points[i][0]+self.__needExpansionGrid-1)*k], fill=40)
-            draw.text(((visual_points[i][1]+self.__needExpansionGrid)*k,
-                       (visual_points[i][0]-self.__needExpansionGrid+1)*k),
-                      str(i), font=font, direction='rtl', fill=0)
+        font = ImageFont.truetype('./consola.ttf', size=20)
         if points is not None:
-            for i in range(len(points)-1):
-                draw.line([visual_points[points[i]][1]*k, visual_points[points[i]][0]*k,
-                           visual_points[points[i+1]][1]*k, visual_points[points[i+1]][0]*k], width=5, fill=20)
+            for i in range(len(points)):
+                if i != len(points)-1:
+                    draw.line([points[i][1]*k, points[i][0]*k,
+                               points[i+1][1]*k, points[i+1][0]*k], width=5, fill=20)
+                draw.text(((points[i][1]+self.__needExpansionGrid)*k,
+                           (points[i][0]-self.__needExpansionGrid+1)*k),
+                          str(i), font=font, direction='rtl', fill=0)
         zoom_map = np.array(img)
         return zoom_map
 
