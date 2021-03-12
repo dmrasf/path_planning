@@ -8,6 +8,7 @@ class PathPlanningA():
 
     def __init__(self, my_map: Map):
         self.__map = my_map
+        self.__calculate_graph()
 
     def __calculate_graph(self):
         """计算可视点间距离"""
@@ -69,13 +70,13 @@ class PathPlanningA():
             if tmp_point == 0:
                 break
         path_route.reverse()
-        # self.__path_route = []
+        self.__path_route = []
+        for point in path_route:
+            self.__path_route.append(self.__visual_points[point])
         print('A*算法计算出的路径点：', path_route)
         return path_route
-        # for point in path_route:
-        # self.__path_route.append(self.__visual_points[point])
 
-    def save_route_path(self, save_path):
+    def save_route_path(self, save_path='point_a.json'):
         try:
             real_points = [self.__map.get_start_point()]
             for i in range(1, len(self.__path_route)-1):
@@ -92,7 +93,6 @@ class PathPlanningA():
 
     def start_planing(self):
         """开始规划"""
-        self.__calculate_graph()
         self.__close_point_set = set()
         self.__open_point_set = set()
         start = 0

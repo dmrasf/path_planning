@@ -3,10 +3,11 @@ from path_plan_ant import PathPlanningAnt
 from my_map import Map
 
 if __name__ == "__main__":
-    my_map = Map('./map_data_1.json')
+    my_map = Map('./map/map_data_1.json')
 
     p_ant = PathPlanningAnt(my_map)
     r_ant = p_ant.start_planing()
+    p_ant.save_route_path()
     my_map.show_map('Ants', points=r_ant)
 
     p_a = PathPlanningA(my_map)
