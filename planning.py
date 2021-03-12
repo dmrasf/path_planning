@@ -6,10 +6,9 @@ if __name__ == "__main__":
     my_map = Map('./map_data_1.json')
 
     p_ant = PathPlanningAnt(my_map)
-    p_ant.start_planing()
+    r_ant = p_ant.start_planing()
+    my_map.show_map('Ants', points=r_ant)
 
     p_a = PathPlanningA(my_map)
-    path_a = p_a.start_planing()
-    print(my_map.get_visual_points())
-
-    # my_map.show_map()
+    r_a = p_a.start_planing()
+    my_map.show_map('A*', points=r_a)

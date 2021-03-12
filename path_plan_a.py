@@ -11,11 +11,7 @@ class PathPlanningA():
 
     def __calculate_graph(self):
         """计算可视点间距离"""
-        start_point = self.__map.real_to_grid(self.__map.get_start_point())
-        end_point = self.__map.real_to_grid(self.__map.get_end_point())
         visual_points = self.__map.get_visual_points()
-        visual_points.append(end_point)
-        visual_points.insert(0, start_point)
         self.__visual_points = visual_points
         len_visual_points = len(visual_points)
         self.__visual_graph = np.zeros((len_visual_points, len_visual_points))
@@ -73,10 +69,11 @@ class PathPlanningA():
             if tmp_point == 0:
                 break
         path_route.reverse()
-        self.__path_route = []
+        # self.__path_route = []
         print('A*算法计算出的路径点：', path_route)
-        for point in path_route:
-            self.__path_route.append(self.__visual_points[point])
+        return path_route
+        # for point in path_route:
+        # self.__path_route.append(self.__visual_points[point])
 
     def save_route_path(self, save_path):
         try:
@@ -113,5 +110,4 @@ class PathPlanningA():
             if current_point[0] == end:
                 break
         self.__close_point_set.remove((start, start))
-        self.__parse_path_from_close_set()
-        return self.__path_route
+        return self.__parse_path_from_close_set()

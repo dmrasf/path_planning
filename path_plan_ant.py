@@ -25,11 +25,7 @@ class PathPlanningAnt(object):
 
     def __calculate_graph(self):
         """计算可视点间距离"""
-        start_point = self.__map.real_to_grid(self.__map.get_start_point())
-        end_point = self.__map.real_to_grid(self.__map.get_end_point())
         visual_points = self.__map.get_visual_points()
-        visual_points.append(end_point)
-        visual_points.insert(0, start_point)
         self.__visual_points = visual_points
         len_visual_points = len(visual_points)
         self.__start = 0
@@ -136,6 +132,7 @@ class PathPlanningAnt(object):
             if path_route[-1] == self.__end:
                 break
         print('蚁群算法规划：', path_route)
+        return path_route
 
     def start_planing(self):
         """开始规划"""
@@ -148,10 +145,4 @@ class PathPlanningAnt(object):
                 if is_all_arrive_end:
                     break
             self.__update_path_phermonone()
-            # print(self.__current_iteration_ants)
-        # print(self.__path_phermonone)
-        self.__get_final_path()
-
-
-# p = PathPlanningAnt(Map('./map_data_1.json'))
-# p.start_planing()
+        return self.__get_final_path()

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from PIL import Image, ImageFont, ImageDraw, ImageFont
 import numpy as np
 import json
 import math
@@ -36,11 +37,11 @@ class Map:
             self.__my_map[self.__my_map == 0] = 255
             self.__draw_barriers()
             self.__fillHole()
-            needExpansionGrid = math.ceil(
+            self.__needExpansionGrid = math.ceil(
                 (self.__robot_size-self.__grid)/2/self.__grid)
-            if needExpansionGrid < 0:
-                needExpansionGrid = 0
-            self.__expanded = self.__expand_map(needExpansionGrid)
+            if self.__needExpansionGrid < 0:
+                self.__needExpansionGrid = 0
+            self.__expanded = self.__expand_map(self.__needExpansionGrid)
             self.__my_map[self.__expanded[0], self.__expanded[1]] = 0
         except Exception as _:
             print("地图格式错误")
@@ -200,22 +201,21 @@ class Map:
 
     def get_visual_points(self):
         """得到障碍物可视点"""
-        try:
-            self.__visual_points
-        except:
-            contours = self.__get_contours_points(ContourOrder.Clockwise)
-            visual_points = []
-            for contour in contours:
-                point_1 = 0
-                for i in range(1, len(contour)+2):
-                    i = i % len(contour)
-                    if not self.is_visible(contour[point_1], contour[i]):
-                        point_1 = (i-1) % len(contour)
-                        visual_points.append((contour[(i-1) % len(contour)][0],
-                                              contour[(i-1) % len(contour)][1]))
-            self.__visual_points = visual_points
-        finally:
-            return self.__visual_points.copy()
+        contours = self.__get_contours_points(ContourOrder.Clockwise)
+        visual_points = []
+        for contour in contours:
+            point_1 = 0
+            for i in range(1, len(contour)+2):
+                i = i % len(contour)
+                if not self.is_visible(contour[point_1], contour[i]):
+                    point_1 = (i-1) % len(contour)
+                    visual_points.append((contour[(i-1) % len(contour)][0],
+                                          contour[(i-1) % len(contour)][1]))
+        start_point = self.real_to_grid(self.get_start_point())
+        end_point = self.real_to_grid(self.get_end_point())
+        visual_points.append(end_point)
+        visual_points.insert(0, start_point)
+        return visual_points.copy()
 
     def is_visible(self, point_1, point_2):
         """判断在膨胀过地图上，检查两个点是否可视"""
@@ -224,21 +224,42 @@ class Map:
             return False
         return True
 
-    def show_map(self):
-        """显示地图"""
-        tmp_map = self.__my_map.copy()
-        tmp_map[self.__expanded[0], self.__expanded[1]] = 255
-        plt.imshow(tmp_map)
-        plt.xticks([])
-        plt.yticks([])
-        plt.set_cmap('gray')
-        plt.show()
-
-    def show_map_expand(self):
+    def __show_points_to_map(self, points=None):
+        """绘制可视点"""
+        # 图像放大，用来放置文字和提示信息
         tmp_map = self.__my_map.copy()
         tmp_map[self.__expanded[0], self.__expanded[1]] = 200
+        k = int(1500/max(tmp_map.shape))
+        zoom_map = np.zeros((tmp_map.shape[0]*k,
+                             tmp_map.shape[1]*k), dtype='uint8')
+        for i in range(tmp_map.shape[0]):
+            for j in range(tmp_map.shape[1]):
+                zoom_map[i*k:i*k+k, j*k:j*k+k] = tmp_map[i, j]
+        img = Image.fromarray(zoom_map)
+        draw = ImageDraw.Draw(img)
+        visual_points = self.get_visual_points()
+        font = ImageFont.truetype('./consola.ttf', size=50)
+        for i in range(len(visual_points)):
+            draw.ellipse([(visual_points[i][1]-self.__needExpansionGrid)*k,
+                          (visual_points[i][0]-self.__needExpansionGrid)*k,
+                          (visual_points[i][1]+self.__needExpansionGrid-1)*k,
+                          (visual_points[i][0]+self.__needExpansionGrid-1)*k], fill=40)
+            draw.text(((visual_points[i][1]+self.__needExpansionGrid)*k,
+                       (visual_points[i][0]-self.__needExpansionGrid+1)*k),
+                      str(i), font=font, direction='rtl', fill=0)
+        if points is not None:
+            for i in range(len(points)-1):
+                draw.line([visual_points[points[i]][1]*k, visual_points[points[i]][0]*k,
+                           visual_points[points[i+1]][1]*k, visual_points[points[i+1]][0]*k], width=5, fill=20)
+        zoom_map = np.array(img)
+        return zoom_map
+
+    def show_map(self, title, points=None):
+        """显示地图"""
+        tmp_map = self.__show_points_to_map(points)
         plt.imshow(tmp_map)
         plt.xticks([])
         plt.yticks([])
+        plt.title(title)
         plt.set_cmap('gray')
         plt.show()
