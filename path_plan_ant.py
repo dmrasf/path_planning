@@ -104,7 +104,7 @@ class PathPlanningAnt(object):
                 ant.append(-1)
         return is_all_done
 
-    def __get_final_path(self):
+    def __get_final_path(self, is_optimising=False):
         """根据信息素多少求得路径"""
         path_route = [0]
         while True:
@@ -118,8 +118,9 @@ class PathPlanningAnt(object):
         self.__path_route = []
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
+        if is_optimising:
+            self.__path_route = self.__map.optimising_path(self.__path_route)
         path = self.__map.calculate_path_distance(self.__path_route)
-        # print('蚁群算法规划：', self.__path_route)
         print('路径总长度', path)
         return self.__path_route
 
@@ -127,7 +128,7 @@ class PathPlanningAnt(object):
         self.__map.save_route_path(save_path, self.__path_route)
         print('路径保存成功')
 
-    def start_planing(self):
+    def start_planing(self, is_optimising=False):
         """开始规划"""
         self.__init_path_phermonone()
         for _ in range(self.__iteration_num):
@@ -137,4 +138,4 @@ class PathPlanningAnt(object):
                 if is_all_arrive_end:
                     break
             self.__update_path_phermonone()
-        return self.__get_final_path()
+        return self.__get_final_path(is_optimising=is_optimising)

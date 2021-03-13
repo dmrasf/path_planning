@@ -56,6 +56,18 @@ class Map:
     def get_end_point(self):
         return (self.__end_point[0], self.__end_point[1])
 
+    def set_end_point(self, end):
+        self.__end_point[0] = end[0]
+        self.__end_point[1] = end[1]
+        del self.__visual_graph
+        del self.__visual_points
+
+    def set_start_point(self, start):
+        self.__start_point[0] = start[0]
+        self.__start_point[1] = start[1]
+        del self.__visual_graph
+        del self.__visual_points
+
     def real_to_grid(self, point):
         """实际坐标 -> 栅格坐标"""
         point_x = int(point[0]/self.__grid)
@@ -288,6 +300,25 @@ class Map:
                 zoom_map[i*k:i*k+k, j*k:j*k+k] = tmp_map[i, j]
         return zoom_map.copy(), k
 
+    def optimising_path(self, points):
+        """优化路径"""
+        current_point = points[0]
+        necessary_points = [current_point]
+        i = 0
+        while True:
+            tmp_i = 0
+            tmp_point = []
+            for j in range(i + 1, len(points)):
+                if self.is_visible(current_point, points[j]):
+                    tmp_point = points[j]
+                    tmp_i = j
+            current_point = tmp_point
+            i = tmp_i
+            necessary_points.append(current_point)
+            if necessary_points[-1] == points[-1]:
+                break
+        return necessary_points
+
     def __show_points_to_map(self, points=None):
         """绘制可视点"""
         zoom_map, k = self.__zoom_map_for_show()
@@ -317,6 +348,8 @@ class Map:
         plt.imshow(tmp_map)
         plt.xticks([])
         plt.yticks([])
+        plt.xlabel(str(self.__width)+'m')
+        plt.ylabel(str(self.__heigth)+'m')
         plt.title(title)
         plt.set_cmap('gray')
         plt.show()

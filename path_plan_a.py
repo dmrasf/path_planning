@@ -61,7 +61,7 @@ class PathPlanningA():
                 best_point = tmp_point
         return best_point
 
-    def __parse_path_from_close_set(self, end):
+    def __parse_path_from_close_set(self, end, is_optimising=False):
         """从访问过的点集中解析出一条路径"""
         path_route = [end]
         tmp_point = end
@@ -76,8 +76,9 @@ class PathPlanningA():
         self.__path_route = []
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
+        if is_optimising:
+            self.__path_route = self.__map.optimising_path(self.__path_route)
         path = self.__map.calculate_path_distance(self.__path_route)
-        # print('A*算法计算出的路径点：', self.__path_route)
         print('路径总长度', path)
         return self.__path_route
 
@@ -85,17 +86,7 @@ class PathPlanningA():
         self.__map.save_route_path(save_path, self.__path_route)
         print('路径保存成功')
 
-    def optimising_path_by_replan(self):
-        """优化路径"""
-        tmp_point = self.__path_route[-2]
-        self.__visual_points.pop()
-        self.__visual_points.remove(tmp_point)
-        self.__visual_points.append(tmp_point)
-        self.__get_visual_graph()
-        self.start_planing()
-        return self.__path_route
-
-    def start_planing(self):
+    def start_planing(self, is_optimising=False):
         """开始规划"""
         self.__close_point_set = set()
         self.__open_point_set = set()
@@ -114,4 +105,4 @@ class PathPlanningA():
             if current_point[0] == end:
                 break
         self.__close_point_set.remove((start, start))
-        return self.__parse_path_from_close_set(end)
+        return self.__parse_path_from_close_set(end, is_optimising=is_optimising)
