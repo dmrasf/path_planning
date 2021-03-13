@@ -51,12 +51,13 @@ class PathPlanningA():
         min_distance = float('inf')
         best_point = []
         for tmp_point in self.__open_point_set:
-            # 启发函数
-            tmp_distance = self.__visual_graph[len(self.__visual_points)-1, tmp_point[0]] + \
-                pow(pow(self.__visual_points[current_point[0]][0]-self.__visual_points[tmp_point[0]][0], 2) +
-                    pow(self.__visual_points[current_point[0]][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5) * 0.8
-            if tmp_distance < min_distance:
-                min_distance = tmp_distance
+            # 启发函数 f = h + g
+            h = self.__visual_graph[len(self.__visual_points)-1, tmp_point[0]]
+            g = pow(pow(self.__visual_points[current_point[0]][0]-self.__visual_points[tmp_point[0]][0], 2) +
+                    pow(self.__visual_points[current_point[0]][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5) * 2
+            f = h + g
+            if f < min_distance:
+                min_distance = f
                 best_point = tmp_point
         return best_point
 
@@ -76,7 +77,7 @@ class PathPlanningA():
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
         path = self.__map.calculate_path_distance(self.__path_route)
-        print('A*算法计算出的路径点：', self.__path_route)
+        # print('A*算法计算出的路径点：', self.__path_route)
         print('路径总长度', path)
         return self.__path_route
 

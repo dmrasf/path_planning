@@ -266,14 +266,14 @@ class Map:
 
     def calculate_path_distance(self, points):
         """计算规划路径长度"""
-        try:
-            self.__visual_graph
-        except:
-            self.get_visual_graph()
         path = 0
-        for i in range(len(points)-1):
-            path = path + self.__visual_graph[self.__visual_points.index(points[i]),
-                                              self.__visual_points.index(points[i+1])]
+        real_points = [self.get_start_point()]
+        for i in range(1, len(points)-1):
+            real_points.append(
+                self.grid_to_real(points[i]))
+        for i in range(len(real_points)-1):
+            path = path + pow(pow(real_points[i][0]-real_points[i+1][0], 2) +
+                              pow(real_points[i][1]-real_points[i+1][1], 2), 0.5)
         return path
 
     def __show_points_to_map(self, points=None):

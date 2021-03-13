@@ -119,7 +119,7 @@ class PathPlanningAnt(object):
         for point in path_route:
             self.__path_route.append(self.__visual_points[point])
         path = self.__map.calculate_path_distance(self.__path_route)
-        print('蚁群算法规划：', self.__path_route)
+        # print('蚁群算法规划：', self.__path_route)
         print('路径总长度', path)
         return self.__path_route
 
