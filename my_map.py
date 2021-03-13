@@ -276,9 +276,8 @@ class Map:
                               pow(real_points[i][1]-real_points[i+1][1], 2), 0.5)
         return path
 
-    def __show_points_to_map(self, points=None):
-        """绘制可视点"""
-        # 图像放大，用来放置文字和提示信息
+    def __zoom_map_for_show(self):
+        """放大到合适像素"""
         tmp_map = self.__my_map.copy()
         tmp_map[self.__expanded[0], self.__expanded[1]] = 200
         k = int(1500/max(tmp_map.shape))
@@ -287,6 +286,11 @@ class Map:
         for i in range(tmp_map.shape[0]):
             for j in range(tmp_map.shape[1]):
                 zoom_map[i*k:i*k+k, j*k:j*k+k] = tmp_map[i, j]
+        return zoom_map.copy(), k
+
+    def __show_points_to_map(self, points=None):
+        """绘制可视点"""
+        zoom_map, k = self.__zoom_map_for_show()
         img = Image.fromarray(zoom_map)
         draw = ImageDraw.Draw(img)
         visual_points = self.get_visual_points()

@@ -61,10 +61,10 @@ class PathPlanningA():
                 best_point = tmp_point
         return best_point
 
-    def __parse_path_from_close_set(self):
+    def __parse_path_from_close_set(self, end):
         """从访问过的点集中解析出一条路径"""
-        path_route = [len(self.__visual_points)-1]
-        tmp_point = len(self.__visual_points)-1
+        path_route = [end]
+        tmp_point = end
         while True:
             for points in self.__close_point_set:
                 if points[0] == tmp_point:
@@ -114,4 +114,4 @@ class PathPlanningA():
             if current_point[0] == end:
                 break
         self.__close_point_set.remove((start, start))
-        return self.__parse_path_from_close_set()
+        return self.__parse_path_from_close_set(end)

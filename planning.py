@@ -4,7 +4,7 @@ from my_map import Map
 
 if __name__ == "__main__":
     print('==============读取地图==============')
-    my_map = Map('./map/map_data_1.json')
+    my_map = Map('./map/map_data_3.json')
     print('============读取地图完成============\n')
 
     print('============开始蚁群算法============')
@@ -18,6 +18,5 @@ if __name__ == "__main__":
     print('============开始A*算法==============')
     p_a = PathPlanningA(my_map)
     r_a = p_a.start_planing()
-    r_a = p_a.optimising_path_by_replan()
     print('===========A*算法规划完成===========\n')
     my_map.show_map('A*', points=r_a)
