@@ -54,7 +54,7 @@ class PathPlanningA():
             # 启发函数 f = h + g
             h = self.__visual_graph[len(self.__visual_points)-1, tmp_point[0]]
             g = pow(pow(self.__visual_points[current_point[0]][0]-self.__visual_points[tmp_point[0]][0], 2) +
-                    pow(self.__visual_points[current_point[0]][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5) * 2
+                    pow(self.__visual_points[current_point[0]][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5) * 1.5
             f = h + g
             if f < min_distance:
                 min_distance = f
@@ -78,8 +78,6 @@ class PathPlanningA():
             self.__path_route.append(self.__visual_points[point])
         if is_optimising:
             self.__path_route = self.__map.optimising_path(self.__path_route)
-        path = self.__map.calculate_path_distance(self.__path_route)
-        print('路径总长度', path)
         return self.__path_route
 
     def save_route_path(self, save_path='point_a.json'):

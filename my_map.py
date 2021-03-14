@@ -13,7 +13,15 @@ class Map:
     """构建地图方法类"""
 
     def __init__(self, path):
-        """从文件构建地图"""
+        """构建地图"""
+        self.__build_map_from_file(path)
+
+    def __build_map_from_pic(self, path):
+        """从图片创建"""
+        pass
+
+    def __build_map_from_file(self, path):
+        """从文件创建"""
         contents = dict()
         try:
             with open(path, 'r') as j:
@@ -278,6 +286,8 @@ class Map:
 
     def calculate_path_distance(self, points):
         """计算规划路径长度"""
+        if points is None:
+            return None
         path = 0
         real_points = [self.get_start_point()]
         for i in range(1, len(points)-1):
@@ -319,32 +329,48 @@ class Map:
                 break
         return necessary_points
 
-    def __show_points_to_map(self, points=None):
+    def __show_points_to_map(self, points=None, is_show_all_points=True):
         """绘制可视点"""
         zoom_map, k = self.__zoom_map_for_show()
         img = Image.fromarray(zoom_map)
         draw = ImageDraw.Draw(img)
         visual_points = self.get_visual_points()
-        for i in range(len(visual_points)):
-            draw.ellipse([(visual_points[i][1]-self.__needExpansionGrid)*k,
-                          (visual_points[i][0]-self.__needExpansionGrid)*k,
-                          (visual_points[i][1]+self.__needExpansionGrid-1)*k,
-                          (visual_points[i][0]+self.__needExpansionGrid-1)*k], fill=40)
+        if is_show_all_points:
+            for i in range(len(visual_points)):
+                draw.ellipse([(visual_points[i][1]-self.__needExpansionGrid)*k,
+                              (visual_points[i][0]-self.__needExpansionGrid)*k,
+                              (visual_points[i][1] +
+                               self.__needExpansionGrid-1)*k,
+                              (visual_points[i][0]+self.__needExpansionGrid-1)*k], fill=40)
         font = ImageFont.truetype('./consola.ttf', size=20)
         if points is not None:
             for i in range(len(points)):
                 if i != len(points)-1:
                     draw.line([points[i][1]*k, points[i][0]*k,
                                points[i+1][1]*k, points[i+1][0]*k], width=5, fill=20)
-                draw.text(((points[i][1]+self.__needExpansionGrid)*k,
-                           (points[i][0]-self.__needExpansionGrid+1)*k),
-                          str(i), font=font, direction='rtl', fill=0)
+                draw.ellipse([(points[i][1]-self.__needExpansionGrid)*k,
+                              (points[i][0]-self.__needExpansionGrid)*k,
+                              (points[i][1]+self.__needExpansionGrid-1)*k,
+                              (points[i][0]+self.__needExpansionGrid-1)*k], fill=40)
+                if i == 0:
+                    draw.text(((points[i][1]+self.__needExpansionGrid)*k,
+                               (points[i][0]-self.__needExpansionGrid+1)*k),
+                              'start', font=font, direction='rtl', fill=0)
+                elif i == len(points)-1:
+                    draw.text(((points[i][1]+self.__needExpansionGrid)*k,
+                               (points[i][0]-self.__needExpansionGrid+1)*k),
+                              'end', font=font, direction='rtl', fill=0)
+                else:
+                    draw.text(((points[i][1]+self.__needExpansionGrid)*k,
+                               (points[i][0]-self.__needExpansionGrid+1)*k),
+                              str(i), font=font, direction='rtl', fill=0)
         zoom_map = np.array(img)
         return zoom_map
 
-    def show_map(self, title, points=None):
+    def show_map(self, title, points=None, is_show_all_points=True):
         """显示地图"""
-        tmp_map = self.__show_points_to_map(points)
+        tmp_map = self.__show_points_to_map(points=points,
+                                            is_show_all_points=is_show_all_points)
         plt.imshow(tmp_map)
         plt.xticks([])
         plt.yticks([])

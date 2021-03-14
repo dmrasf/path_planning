@@ -8,15 +8,20 @@ if __name__ == "__main__":
     print('============读取地图完成============\n')
 
     print('============开始蚁群算法============')
-    p_ant = PathPlanningAnt(my_map)
-    p_ant.set_params(ants_num=30, a=1, b=0.2, p=0.8, ant_phermomone=50,
-                     init_path_phermomone_value=1, iteration_num=50)
-    r_ant = p_ant.start_planing()
+    plan_ant = PathPlanningAnt(my_map)
+    plan_ant.set_params(ants_num=40, a=1, b=0.15, p=0.8, ant_phermomone=50,
+                        init_path_phermomone_value=1, iteration_num=30)
+    points_ant = plan_ant.start_planing(is_optimising=True)
+    path_ant = my_map.calculate_path_distance(points_ant)
+    print('路径总长度', path_ant)
+    my_map.show_map('Ants', points=points_ant, is_show_all_points=False)
     print('==========蚁群算法规划完成==========\n')
-    my_map.show_map('Ants', points=r_ant)
 
     print('============开始A*算法==============')
-    p_a = PathPlanningA(my_map)
-    r_a = p_a.start_planing()
+    plan_a = PathPlanningA(my_map)
+    points_a = plan_a.start_planing(is_optimising=True)
+    path_a = my_map.calculate_path_distance(points_a)
+    print('路径总长度', path_a)
+    my_map.show_map('A*', points=points_a, is_show_all_points=True)
+    # plan_a.save_route_path()
     print('===========A*算法规划完成===========\n')
-    my_map.show_map('A*', points=r_a)

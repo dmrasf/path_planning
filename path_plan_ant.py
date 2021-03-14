@@ -123,8 +123,6 @@ class PathPlanningAnt(object):
             self.__path_route.append(self.__visual_points[point])
         if is_optimising:
             self.__path_route = self.__map.optimising_path(self.__path_route)
-        path = self.__map.calculate_path_distance(self.__path_route)
-        print('路径总长度', path)
         return self.__path_route
 
     def save_route_path(self, save_path='points_ant.json'):
