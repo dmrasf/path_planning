@@ -100,7 +100,7 @@ class PathPlanningA():
                 self.__open_point_set.remove(current_point)
             except:
                 print("没有可行路径")
-                exit(1)
+                return None
             self.__update_close_set(current_point)
             if current_point[0] == end:
                 break

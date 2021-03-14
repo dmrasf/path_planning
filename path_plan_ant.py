@@ -110,9 +110,12 @@ class PathPlanningAnt(object):
         while True:
             sort_point = np.argsort(self.__path_phermonone[path_route[-1], :])
             for point in sort_point[::-1]:
-                if point not in path_route:
+                if point not in path_route and self.__path_phermonone[path_route[-1], point] != 0:
                     path_route.append(point)
                     break
+            else:
+                print('没有路径')
+                return None
             if path_route[-1] == self.__end:
                 break
         self.__path_route = []
