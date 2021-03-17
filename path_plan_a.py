@@ -52,7 +52,8 @@ class PathPlanningA():
         best_point = []
         for tmp_point in self.__open_point_set:
             # 启发函数 f = h + g
-            h = self.__visual_graph[len(self.__visual_points)-1, tmp_point[0]]
+            h = pow(pow(self.__visual_points[-1][0]-self.__visual_points[tmp_point[0]][0], 2) +
+                    pow(self.__visual_points[-1][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5)
             g = pow(pow(self.__visual_points[current_point[0]][0]-self.__visual_points[tmp_point[0]][0], 2) +
                     pow(self.__visual_points[current_point[0]][1]-self.__visual_points[tmp_point[0]][1], 2), 0.5) * 1.5
             f = h + g
@@ -91,6 +92,7 @@ class PathPlanningA():
         start = 0
         end = len(self.__visual_points) - 1
         current_point = (start, start)
+        self.__update_close_set(current_point)
         while True:
             self.__update_open_set(current_point)
             current_point = self.__find_next_point(current_point)
