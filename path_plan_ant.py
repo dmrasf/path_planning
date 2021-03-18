@@ -67,7 +67,7 @@ class PathPlanningAnt(object):
             if ant[-1] != -1:
                 path = 0
                 for i in range(len(ant)-1):
-                    path = path + self.__visual_graph[i, i+1]
+                    path = path + self.__visual_graph[ant[i], ant[i+1]]
                 delta_p = self.__ant_pheromone/path
                 for i in range(len(ant)-1):
                     self.__path_phermonone[ant[i], ant[i+1]] = \
@@ -97,10 +97,10 @@ class PathPlanningAnt(object):
                     self.__calculate_probability(ant[-1], point_to_selected[i])
             probabilities = probabilities/np.sum(probabilities)
             try:
-                # 遇到死路设为-1，不会增加信息素
                 ant.append(np.random.choice(
                     point_to_selected, 1, p=probabilities)[0])
             except:
+                # 遇到死路设为-1，不会增加信息素
                 ant.append(-1)
         return is_all_done
 
