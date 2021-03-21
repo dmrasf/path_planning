@@ -1,0 +1,409 @@
+{
+  "width": 10,
+  "heigth": 10,
+  "grid": 0.05,
+  "robotSize": 0.3,
+  "name": "many walls",
+  "start": [
+    0.5,
+    0.5
+  ],
+  "end": [
+    3,
+    9
+  ],
+  "barriers": [
+    [
+      {
+        "pointX": 0.5,
+        "pointY": 0.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 0.5,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 0.5,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 0.5,
+        "pointY": 6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 0.5,
+        "pointY": 8.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 8.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 6,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 1,
+        "pointY": 3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 3.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 3.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 1,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9.5,
+        "pointY": 1,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9.5,
+        "pointY": 0.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4,
+        "pointY": 0.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4,
+        "pointY": 1,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4.5,
+        "pointY": 1,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4.5,
+        "pointY": 3,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 1.5,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1.5,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2,
+        "pointY": 7.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2,
+        "pointY": 5,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 1,
+        "pointY": 9,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 9.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 9.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 9,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3.5,
+        "pointY": 9,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3.5,
+        "pointY": 6.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3,
+        "pointY": 6.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3,
+        "pointY": 9,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 2,
+        "pointY": 1,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 2,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4,
+        "pointY": 2,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4,
+        "pointY": 1.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 1.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 1,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 2.5,
+        "pointY": 4.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 2.5,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8,
+        "pointY": 4.5,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 4.5,
+        "pointY": 6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 4.5,
+        "pointY": 8.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 8.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 5,
+        "pointY": 6.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8,
+        "pointY": 6.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8,
+        "pointY": 8.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 8.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 6,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 6.5,
+        "pointY": 7,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 6.5,
+        "pointY": 9.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 9.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 9,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 7,
+        "pointY": 9,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 7,
+        "pointY": 7,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 8.5,
+        "pointY": 2.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 7,
+        "pointY": 3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 7,
+        "pointY": 3.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 3.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 8.5,
+        "pointY": 5.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 5.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9.5,
+        "pointY": 5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9.5,
+        "pointY": 4.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 4.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 2.5,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 6,
+        "pointY": 1.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 6,
+        "pointY": 4,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 6.5,
+        "pointY": 4,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 6.5,
+        "pointY": 2,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 2,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9,
+        "pointY": 1.5,
+        "lineType": "straight"
+      }
+    ]
+  ]
+}

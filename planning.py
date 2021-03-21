@@ -11,7 +11,7 @@ if __name__ == "__main__":
     plan_ant = PathPlanningAnt(my_map)
     plan_ant.set_params(ants_num=40, a=1, b=0.15, p=0.8, ant_phermomone=50,
                         init_path_phermomone_value=1, iteration_num=30)
-    points_ant = plan_ant.start_planing(is_optimising=True)
+    points_ant = plan_ant.start_planing(is_optimising=False)
     path_ant = my_map.calculate_path_distance(points_ant)
     print('路径总长度', path_ant)
     my_map.show_map('Ants', points=points_ant, is_show_all_points=False)
