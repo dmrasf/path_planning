@@ -79,7 +79,11 @@ class PathPlanningAnt(object):
         """计算可行坐标的信息素与路径长度值"""
         if self.__visual_graph[point_1, point_2] == 0 or self.__visual_graph[point_1, point_2] == -1:
             return 0
-        return pow(self.__path_phermonone[point_1, point_2], self.__a) * pow(1/self.__visual_graph[point_1, point_2], self.__b)
+        real_p1 = self.__map.grid_to_real(self.__visual_points[point_1])
+        real_p2 = self.__map.grid_to_real(self.__visual_points[point_2])
+        path = pow(pow(real_p1[0]-real_p2[0], 2) +
+                   pow(real_p1[1]-real_p2[1], 2), 0.5)
+        return pow(self.__path_phermonone[point_1, point_2], self.__a) * pow(1/path, self.__b)
 
     def __select_next_pos_for_ants(self):
         """选择蚂蚁下一个坐标"""
