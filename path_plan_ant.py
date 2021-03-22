@@ -108,9 +108,12 @@ class PathPlanningAnt(object):
         """根据信息素多少求得路径"""
         path_route = [0]
         while True:
-            sort_point = np.argsort(self.__path_phermonone[path_route[-1], :])
+            tmp = []
+            for i in range(len(self.__visual_points)):
+                tmp.append(self.__calculate_probability(path_route[-1], i))
+            sort_point = np.argsort(np.array(tmp))
             for point in sort_point[::-1]:
-                if point not in path_route and self.__path_phermonone[path_route[-1], point] != 0:
+                if point not in path_route:
                     path_route.append(point)
                     break
             else:

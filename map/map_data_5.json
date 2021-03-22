@@ -5,12 +5,12 @@
   "robotSize": 0.3,
   "name": "many walls",
   "start": [
-    0.5,
-    0.5
+    1.5,
+    1.5
   ],
   "end": [
-    3,
-    9
+    7.5,
+    7.5
   ],
   "barriers": [
     [
