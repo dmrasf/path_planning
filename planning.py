@@ -4,7 +4,8 @@ from my_map import Map
 
 if __name__ == "__main__":
     print('==============读取地图==============')
-    my_map = Map('./map/map_data_5.json')
+    # my_map = Map('./map/map_data_5.json', 'json')
+    my_map = Map('./map/map_img_1.png', 'img')
     print('============读取地图完成============\n')
 
     print('============开始蚁群算法============')
@@ -14,7 +15,7 @@ if __name__ == "__main__":
     points_ant = plan_ant.start_planing(is_optimising=False)
     path_ant = my_map.calculate_path_distance(points_ant)
     print('路径总长度', path_ant)
-    my_map.show_map('Ants', points=points_ant, is_show_all_points=False)
+    my_map.show_map('Ants', points=points_ant, is_show_all_points=True)
     print('==========蚁群算法规划完成==========\n')
 
     print('============开始A*算法==============')

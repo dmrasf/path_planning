@@ -12,13 +12,42 @@ ContourOrder = Enum('ContourOrder', ('Counterclockwise', 'Clockwise'))
 class Map:
     """构建地图方法类"""
 
-    def __init__(self, path):
+    def __init__(self, path, type):
         """构建地图"""
-        self.__build_map_from_file(path)
+        if type == 'json':
+            self.__build_map_from_file(path)
+        elif type == 'img':
+            self.__build_map_from_pic(path)
+        else:
+            print('输入类型')
+            exit(0)
 
     def __build_map_from_pic(self, path):
         """从图片创建"""
-        pass
+        try:
+            im = np.array(Image.open(path))[:, :, 1]
+            self.__width = 15
+            self.__heigth = self.__width * im.shape[0] / im.shape[1]
+            self.__grid = 0.05
+            self.__start_point = [1, 1]
+            self.__end_point = [2, 1]
+            self.__robot_size = 0.3
+            self.__w_grid = math.ceil(self.__width/self.__grid)
+            self.__h_grid = math.ceil(self.__heigth/self.__grid)
+            img = Image.fromarray(im)
+            img = img.resize((self.__w_grid, self.__h_grid))
+            self.__my_map = np.array(img)
+            self.__my_map[self.__my_map > 0] = 255
+            self.__fillHole()
+            self.__needExpansionGrid = math.ceil(
+                (self.__robot_size-self.__grid)/2/self.__grid)
+            if self.__needExpansionGrid < 0:
+                self.__needExpansionGrid = 0
+            self.__expanded = self.__expand_map(self.__needExpansionGrid)
+            self.__my_map[self.__expanded[0], self.__expanded[1]] = 0
+        except Exception as _:
+            print("地图格式错误")
+            exit(0)
 
     def __build_map_from_file(self, path):
         """从文件创建"""
