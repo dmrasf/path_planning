@@ -29,7 +29,10 @@ class PathPlanningRRTStar():
 
     def __find_near_point_from_tree_for_star(self):
         distance = float('inf')
-        r = 1000
+        l = len(self.__ed)
+        r = math.sqrt(math.log(l)/l) * 50
+        if r < self.__branch_len:
+            r = 300
         near = ()
         for node in self.__ed:
             tmp = self.__calculate_dis(node, self.__x_rand)
@@ -68,7 +71,10 @@ class PathPlanningRRTStar():
         self.__ed.add(self.__x_new)
 
     def __change_parent(self):
-        r = 300
+        l = len(self.__ed)
+        r = math.sqrt(math.log(l)/l) * 50
+        if r < self.__branch_len:
+            r = 300
         dis = self.__calculate_path_dis(self.__x_new)
         for node in self.__ed:
             if node == self.__x_new or node == self.__t[self.__x_new]:
@@ -130,11 +136,11 @@ class PathPlanningRRTStar():
         return self.__path
 
 
-# my_map = Map('./map/map_data_4.json', 'json')
-# plan_rrt = PathPlanningRRTStar(my_map)
-# print('========================================')
-# points_rrt = plan_rrt.start_planing()
-# path_a = my_map.calculate_path_distance(points_rrt)
-# print('路径总长度', path_a)
-# print('========================================')
-# my_map.show_map('RRT', points=points_rrt)
+my_map = Map('./map/map_data_4.json', 'json')
+plan_rrt = PathPlanningRRTStar(my_map)
+print('========================================')
+points_rrt = plan_rrt.start_planing()
+path_a = my_map.calculate_path_distance(points_rrt)
+print('路径总长度', path_a)
+print('========================================')
+my_map.show_map('RRT', points=points_rrt)
