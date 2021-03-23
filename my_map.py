@@ -396,7 +396,7 @@ class Map:
         zoom_map = np.array(img)
         return zoom_map
 
-    def show_map(self, title, points=None, is_show_all_points=True):
+    def show_map(self, title, points=None, is_show_all_points=False):
         """显示地图"""
         tmp_map = self.__show_points_to_map(points=points,
                                             is_show_all_points=is_show_all_points)

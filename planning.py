@@ -1,11 +1,12 @@
 from path_plan_a import PathPlanningA
 from path_plan_ant import PathPlanningAnt
+from path_plan_rrt import PathPlanningRRT
 from my_map import Map
 
 if __name__ == "__main__":
     print('==============读取地图==============')
-    # my_map = Map('./map/map_data_5.json', 'json')
-    my_map = Map('./map/map_img_1.png', 'img')
+    my_map = Map('./map/map_data_3.json', 'json')
+    # my_map = Map('./map/map_img_1.png', 'img')
     print('============读取地图完成============\n')
 
     print('============开始蚁群算法============')
@@ -24,5 +25,12 @@ if __name__ == "__main__":
     path_a = my_map.calculate_path_distance(points_a)
     print('路径总长度', path_a)
     my_map.show_map('A*', points=points_a, is_show_all_points=True)
-    # plan_a.save_route_path()
     print('===========A*算法规划完成===========\n')
+
+    print('============开始RRT算法==============')
+    plan_rrt = PathPlanningRRT(my_map)
+    points_rrt = plan_rrt.start_planing()
+    path_a = my_map.calculate_path_distance(points_rrt)
+    print('路径总长度', path_a)
+    my_map.show_map('RRT', points=points_rrt)
+    print('===========RRT算法规划完成===========\n')
