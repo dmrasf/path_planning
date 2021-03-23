@@ -4,6 +4,7 @@ from my_map import Map
 import json
 import random
 import math
+from node import Node
 
 
 class PathPlanningRRT():
@@ -21,7 +22,7 @@ class PathPlanningRRT():
             x = random.randint(0, len(self.__map[:, 0])-1)
             y = random.randint(0, len(self.__map[0, :])-1)
             if (x, y) not in self.__ed and self.__map[x, y] == 255:
-                if self.__my_map.is_visible(self.__x_current, [x, y]):
+                if self.__my_map.is_visible(self.__current.get_point(), [x, y]):
                     return (x, y)
 
     def __calculate_dis(self, p1, p2):
@@ -29,11 +30,12 @@ class PathPlanningRRT():
 
     def __find_near_point_from_tree(self):
         distance = 10000000000000
-        for node in self.__tree:
-            tmp = self.__calculate_dis(node[0], self.__x_rand)
-            if tmp < distance and self.__my_map.is_visible(node[0], self.__x_rand):
+        for node in self.__ed:
+            tmp = self.__calculate_dis(node, self.__x_rand)
+            if tmp < distance and self.__my_map.is_visible(node, self.__x_rand):
                 distance = tmp
-                self.__x_near = node[0]
+                self.__x_near = node
+        self.__current = self.__tree.find_point(self.__x_near)
 
     def __calculate_new_node(self):
         dis = self.__calculate_dis(self.__x_rand, self.__x_near)
@@ -46,8 +48,7 @@ class PathPlanningRRT():
             self.__x_new = (math.ceil(x), math.ceil(y))
 
     def __add_new_branch(self):
-        self.__x_current = [self.__x_new[0], self.__x_new[1]]
-        self.__tree.append([self.__x_new, self.__x_near])
+        self.__current = self.__current.add_child(self.__x_new)
         self.__ed.add(self.__x_new)
 
     def __is_arrived(self):
@@ -57,25 +58,25 @@ class PathPlanningRRT():
         return False
 
     def __parse_path(self):
-        self.__path_route = [self.__end]
-        while self.__path_route[-1] != self.__start:
-            for node in self.__tree:
-                if node[0] == self.__path_route[-1]:
-                    self.__path_route.append(node[1])
+        self.__path = [self.__current.get_point()]
+        while self.__current.get_parent() is not None:
+            self.__current = self.__current.get_parent()
+            self.__path.append(self.__current.get_point())
 
     def start_planing(self):
         """开始规划"""
-        self.__tree = [[self.__start, self.__start]]
-        self.__ed = set(self.__start)
-        self.__x_current = self.__start
-
+        self.__tree = Node(self.__start)
+        self.__current = self.__tree
+        self.__ed = set()
+        self.__ed.add(self.__start)
         for _ in range(10000):
             self.__x_rand = self.__get_random_point()
             self.__find_near_point_from_tree()
             self.__calculate_new_node()
             self.__add_new_branch()
             if self.__is_arrived():
-                self.__tree.append([self.__end, self.__x_new])
+                self.__current = self.__current.add_child(self.__end)
                 self.__parse_path()
                 break
-        return self.__path_route
+        print(self.__path)
+        return self.__path
