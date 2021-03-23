@@ -49,6 +49,9 @@ class Map:
             print("地图格式错误")
             exit(0)
 
+    def get_size_grid(self):
+        return self.__h_grid, self.__w_grid
+
     def __build_map_from_file(self, path):
         """从文件创建"""
         contents = dict()
