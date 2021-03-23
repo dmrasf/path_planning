@@ -5,8 +5,7 @@ from my_map import Map
 
 if __name__ == "__main__":
     print('==============读取地图==============')
-    my_map = Map('./map/map_data_3.json', 'json')
-    # my_map = Map('./map/map_img_1.png', 'img')
+    my_map = Map('./map/map_data_4.json', 'json')
     print('============读取地图完成============\n')
 
     print('============开始蚁群算法============')
