@@ -17,7 +17,7 @@ class PathPlanningRRTStar():
         self.__radius = 2
         self.__size = my_map.get_size_grid()
         self.__rate = 0.5
-        self.__branch_len = 2
+        self.__branch_len = 1
 
     def __get_random_point(self):
         while True:
@@ -119,12 +119,17 @@ class PathPlanningRRTStar():
 
         for i in range(100000):
             self.__x_rand = self.__get_random_point()
+            print('=============1')
             self.__x_near = self.__find_near_point_from_tree_for_star()
+            print('=============2')
             self.__x_new = self.__calculate_new_node()
+            print('=============3')
             if len(self.__x_new) == 0:
                 continue
             self.__add_new_branch()
+            print('=============4')
             self.__change_parent()
+            print('=============5')
             if self.__is_arrived():
                 print(i)
                 self.__t[self.__end] = self.__x_new
