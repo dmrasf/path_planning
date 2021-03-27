@@ -5,12 +5,12 @@
   "robotSize": 0.3,
   "name": "pacman",
   "start": [
-    9.5,
+    9,
     9.5
   ],
   "end": [
-    14,
-    5.5
+    17,
+    5
   ],
   "barriers": [
     [
