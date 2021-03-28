@@ -52,6 +52,9 @@ class Map:
     def get_size_grid(self):
         return self.__h_grid, self.__w_grid
 
+    def get_grid(self):
+        return self.__grid
+
     def __build_map_from_file(self, path):
         """从文件创建"""
         contents = dict()
@@ -174,8 +177,8 @@ class Map:
                 y = np.array(range(point_1_y, point_2_y+1))
             x = (y-point_1_y)/(point_2_y-point_1_y) * \
                 (point_2_x-point_1_x)+point_1_x
-        x = x.astype(np.int)
-        y = y.astype(np.int)
+        x = x.astype(int)
+        y = y.astype(int)
         return [x, y]
 
     def __draw_line(self, point_1_data, point_2_data):
@@ -287,8 +290,8 @@ class Map:
                     if self.__visual_points[i] == self.__visual_points[j]:
                         self.__visual_graph[i, j] = 0
                     elif self.is_visible(self.__visual_points[i], self.__visual_points[j]):
-                        self.__visual_graph[i, j] = pow(pow(self.__visual_points[i][0]-self.__visual_points[j][0], 2) +
-                                                        pow(self.__visual_points[i][1]-self.__visual_points[j][1], 2), 0.5)
+                        self.__visual_graph[i, j] = pow((pow(self.__visual_points[i][0]-self.__visual_points[j][0], 2) +
+                                                         pow(self.__visual_points[i][1]-self.__visual_points[j][1], 2))*self.__grid, 0.5)
                     else:
                         self.__visual_graph[i, j] = -1
                     self.__visual_graph[j, i] = self.__visual_graph[i, j]

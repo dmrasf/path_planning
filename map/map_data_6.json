@@ -5,14 +5,36 @@
   "robotSize": 0.3,
   "name": "复杂迷宫",
   "start": [
-    3,
-    6
+    1.5,
+    1.5
   ],
   "end": [
     9,
     18
   ],
   "barriers": [
+    [
+      {
+        "pointX": 9.5,
+        "pointY": 14.5,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 9.5,
+        "pointY": 15,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 10,
+        "pointY": 15,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 10,
+        "pointY": 14.5,
+        "lineType": "straight"
+      }
+    ],
     [
       {
         "pointX": 5.5,
@@ -449,18 +471,8 @@
         "lineType": "straight"
       },
       {
-        "pointX": 3.5,
-        "pointY": 10,
-        "lineType": "straight"
-      },
-      {
-        "pointX": 3.5,
-        "pointY": 9.5,
-        "lineType": "straight"
-      },
-      {
         "pointX": 3,
-        "pointY": 9.5,
+        "pointY": 10,
         "lineType": "straight"
       },
       {
