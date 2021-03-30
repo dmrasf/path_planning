@@ -1,6 +1,5 @@
 from path_plan_a import PathPlanningA
 from path_plan_ant import PathPlanningAnt
-from path_plan_rrt_star import PathPlanningRRTStar
 from my_map import Map
 
 if __name__ == "__main__":
@@ -25,11 +24,3 @@ if __name__ == "__main__":
     print('路径总长度', path_a)
     my_map.show_map('A*', points=points_a, is_show_all_points=True)
     print('===========A*算法规划完成===========\n')
-
-    print('============开始RRT*算法==============')
-    plan_rrt_star = PathPlanningRRTStar(my_map)
-    points_rrt_star = plan_rrt_star.start_planing()
-    path_rrt_star = my_map.calculate_path_distance(points_rrt_star)
-    print('路径总长度', path_rrt_star)
-    print('===========RRT*算法规划完成===========\n')
-    my_map.show_map('RRT', points=points_rrt_star)
