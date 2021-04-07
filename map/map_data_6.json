@@ -4,6 +4,7 @@
   "grid": 0.05,
   "robotSize": 0.3,
   "name": "复杂迷宫",
+  "type": "custom map",
   "start": [
     1.5,
     1.5
@@ -13,6 +14,28 @@
     18
   ],
   "barriers": [
+    [
+      {
+        "pointX": 0.5,
+        "pointY": 0.9,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 0.5,
+        "pointY": 1.3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 1.3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 0.9,
+        "lineType": "straight"
+      }
+    ],
     [
       {
         "pointX": 9.5,

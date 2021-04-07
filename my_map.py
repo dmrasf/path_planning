@@ -177,8 +177,6 @@ class Map:
                 y = np.array(range(point_1_y, point_2_y+1))
             x = (y-point_1_y)/(point_2_y-point_1_y) * \
                 (point_2_x-point_1_x)+point_1_x
-        x = x.astype(int)
-        y = y.astype(int)
         return [x, y]
 
     def __draw_line(self, point_1_data, point_2_data):
@@ -190,6 +188,10 @@ class Map:
         if point_1_data['lineType'] == 'straight':
             points = self.get_points_from_two_point_line(
                 [point_1_x, point_1_y], [point_2_x, point_2_y])
+            points[0] = np.around(points[0])
+            points[1] = np.around(points[1])
+            points[0] = points[0].astype(int)
+            points[1] = points[1].astype(int)
             self.__my_map[points[0], points[1]] = 0
         elif point_1_data['lineType'] == 'curve':
             pass
@@ -263,7 +265,7 @@ class Map:
             visual_points = []
             for contour in contours:
                 point_1 = 0
-                for i in range(1, len(contour)+2):
+                for i in range(1, len(contour)+5):
                     i = i % len(contour)
                     if not self.is_visible(contour[point_1], contour[i]):
                         point_1 = (i-1) % len(contour)
@@ -299,8 +301,17 @@ class Map:
 
     def is_visible(self, point_1, point_2):
         """判断在膨胀过地图上，检查两个点是否可视"""
-        points = self.get_points_from_two_point_line(point_1, point_2)
-        if np.min(self.__my_map[points[0], points[1]]) == 0:
+        self.__my_map[self.__expanded[0], self.__expanded[1]] = 0
+        x, y = self.get_points_from_two_point_line(point_1, point_2)
+        x_ceil = np.ceil(x)
+        y_ceil = np.ceil(y)
+        x_ceil = x_ceil.astype(int)
+        y_ceil = y_ceil.astype(int)
+        x_floor = np.floor(x)
+        y_floor = np.floor(y)
+        x_floor = x_floor.astype(int)
+        y_floor = y_floor.astype(int)
+        if np.min(self.__my_map[x_ceil, y_ceil]) == 0 and np.min(self.__my_map[x_floor, y_floor]) == 0:
             return False
         return True
 
@@ -337,6 +348,9 @@ class Map:
         """放大到合适像素"""
         tmp_map = self.__my_map.copy()
         tmp_map[self.__expanded[0], self.__expanded[1]] = 200
+        for contour in self.__get_contours_points(ContourOrder.Clockwise):
+            for p in contour:
+                tmp_map[p[0]][p[1]] = 100
         k = int(1500/max(tmp_map.shape))
         zoom_map = np.zeros((tmp_map.shape[0]*k,
                              tmp_map.shape[1]*k), dtype='uint8')
@@ -377,7 +391,7 @@ class Map:
                               (visual_points[i][1] +
                                self.__needExpansionGrid-1)*k,
                               (visual_points[i][0]+self.__needExpansionGrid-1)*k], fill=40)
-        font = ImageFont.truetype('./consola.ttf', size=20)
+        font = ImageFont.truetype('./consola.ttf', size=30)
         if points is not None:
             for i in range(len(points)):
                 if i != len(points)-1:
@@ -409,8 +423,12 @@ class Map:
         plt.imshow(tmp_map)
         plt.xticks([])
         plt.yticks([])
-        plt.xlabel(str(self.__width)+'m')
-        plt.ylabel(str(self.__heigth)+'m')
-        plt.title(title)
+        font = {'family': 'YaHei Consolas Hybrid',
+                'weight': 'normal',
+                'size': 25,
+                }
+        plt.xlabel(str(self.__width)+'m', font)
+        plt.ylabel(str(self.__heigth)+'m', font)
+        plt.title(title, font)
         plt.set_cmap('gray')
         plt.show()

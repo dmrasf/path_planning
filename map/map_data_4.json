@@ -4,6 +4,7 @@
   "grid": 0.05,
   "robotSize": 0.3,
   "name": "pacman",
+  "type": "custom map",
   "start": [
     9,
     9.5

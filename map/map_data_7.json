@@ -1,0 +1,62 @@
+{
+  "width": 7,
+  "heigth": 4,
+  "grid": 0.05,
+  "robotSize": 0.3,
+  "name": "几个方块",
+  "type": "custom map",
+  "start": [
+    0.5,
+    0.5
+  ],
+  "end": [
+    3.5,
+    6.5
+  ],
+  "barriers": [
+    [
+      {
+        "pointX": 1,
+        "pointY": 1,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3,
+        "pointY": 3,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3,
+        "pointY": 1,
+        "lineType": "straight"
+      }
+    ],
+    [
+      {
+        "pointX": 1,
+        "pointY": 4,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 1,
+        "pointY": 6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3,
+        "pointY": 6,
+        "lineType": "straight"
+      },
+      {
+        "pointX": 3,
+        "pointY": 4,
+        "lineType": "straight"
+      }
+    ]
+  ]
+}

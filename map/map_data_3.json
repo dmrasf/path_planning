@@ -1,9 +1,10 @@
 {
   "width": 27,
   "heigth": 16,
-  "grid": 0.05,
+  "grid": 0.1,
   "robotSize": 0.3,
   "name": "迷宫",
+  "type": "custom map",
   "start": [
     3,
     3

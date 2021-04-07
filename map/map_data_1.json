@@ -4,6 +4,7 @@
   "grid": 0.05,
   "robotSize": 0.3,
   "name": "simple barriers",
+  "type": "custom map",
   "start": [
     0.5,
     0.5

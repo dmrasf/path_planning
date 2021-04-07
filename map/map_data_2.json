@@ -4,6 +4,7 @@
   "grid": 0.05,
   "robotSize": 0.3,
   "name": "几个方格房间",
+  "type": "custom map",
   "start": [
     1,
     1

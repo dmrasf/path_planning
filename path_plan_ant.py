@@ -14,15 +14,15 @@ class PathPlanningAnt(object):
         # 信息素权重
         self.__a = 1
         # 路径长度权重
-        self.__b = 0.5
+        self.__b = 3
         # 信息素挥发速度
-        self.__p = 0.4
+        self.__p = 0.5
         # 每只蚂蚁所含有的信息素
         self.__ant_pheromone = 100
         # 路径信息素初始值
-        self.__init_paht_phermonone_value = 2
+        self.__init_paht_phermonone_value = 1
         # 迭代次数，蚂蚁代数
-        self.__iteration_num = 10
+        self.__iteration_num = 200
         self.__visual_graph = self.__map.get_visual_graph()
         self.__visual_points = self.__map.get_visual_points()
         self.__end = len(self.__visual_points)-1
