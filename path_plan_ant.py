@@ -26,6 +26,8 @@ class PathPlanningAnt(object):
         self.__visual_graph = self.__map.get_visual_graph()
         self.__visual_points = self.__map.get_visual_points()
         self.__end = len(self.__visual_points)-1
+        self.__best_distance = float('inf')
+        self.__best_path = []
 
     def set_params(self, ants_num=None, a=None, b=None, p=None, ant_phermomone=None, init_path_phermomone_value=None, iteration_num=None):
         """设置算法参数 默认参数"""
@@ -60,20 +62,43 @@ class PathPlanningAnt(object):
         for _ in range(self.__ants_num):
             self.__current_iteration_ants.append([0])
 
-    def __update_path_phermonone(self):
+    def __update_path_phermonone(self, is_optimising=False):
         """更新路径信息素"""
-        self.__path_phermonone = self.__path_phermonone*(1-self.__p)
+        if is_optimising:
+            self.__path_phermonone[self.__path_phermonone > 0.1] =\
+                self.__path_phermonone[self.__path_phermonone > 0.1] *\
+                (1-self.__p)
+        else:
+            self.__path_phermonone = self.__path_phermonone * (1-self.__p)
+
+        best_distance = float('inf')
+        best_path = []
         for ant in self.__current_iteration_ants:
             if ant[-1] != -1:
                 path = 0
                 for i in range(len(ant)-1):
                     path = path + self.__visual_graph[ant[i], ant[i+1]]
-                delta_p = self.__ant_pheromone/path
-                for i in range(len(ant)-1):
-                    self.__path_phermonone[ant[i], ant[i+1]] = \
-                        self.__path_phermonone[ant[i], ant[i+1]] + delta_p
-                    self.__path_phermonone[ant[i+1], ant[i]] = \
-                        self.__path_phermonone[ant[i], ant[i+1]]
+                if path < best_distance:
+                    best_distance = path
+                    best_path = ant.copy()
+        if best_distance < self.__best_distance:
+            self.__best_distance = best_distance
+            self.__best_path = best_path
+
+        if len(best_path) == 0:
+            return
+
+        if is_optimising:
+            if best_distance > self.__best_distance:
+                best_distance = self.__best_distance
+                best_path = self.__best_path
+
+        delta_p = self.__ant_pheromone/best_distance
+        for i in range(len(best_path)-1):
+            self.__path_phermonone[best_path[i], best_path[i+1]] = \
+                self.__path_phermonone[best_path[i], best_path[i+1]] + delta_p
+            self.__path_phermonone[best_path[i+1], best_path[i]] = \
+                self.__path_phermonone[best_path[i], best_path[i+1]]
 
     def __calculate_probability(self, point_1, point_2):
         """计算可行坐标的信息素与路径长度值"""
@@ -145,5 +170,5 @@ class PathPlanningAnt(object):
                 is_all_arrive_end = self.__select_next_pos_for_ants()
                 if is_all_arrive_end:
                     break
-            self.__update_path_phermonone()
+            self.__update_path_phermonone(is_optimising=is_optimising)
         return self.__get_final_path(is_optimising=is_optimising)

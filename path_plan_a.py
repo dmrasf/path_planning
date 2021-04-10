@@ -34,7 +34,7 @@ class PathPlanningA():
         for tmp_point in self.__open_point_set:
             h = pow(pow(self.__visual_points[-1][0]-self.__visual_points[tmp_point][0], 2)*self.__map.get_grid() +
                     pow(self.__visual_points[-1][1]-self.__visual_points[tmp_point][1], 2)*self.__map.get_grid(), 0.5)
-            g = self.__visual_graph[current_point][tmp_point]
+            g = self.__calculate_path_distance(tmp_point, False)
             f = h + g
             if f < min_distance:
                 min_distance = f
